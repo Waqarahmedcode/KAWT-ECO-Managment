@@ -1,0 +1,882 @@
+[
+  {
+    "id": "FMC-01",
+    "name": "Purana Golimar Free Medical Camp",
+    "date": "2026-04-26",
+    "timeWindow": "10:00 AM – 04:00 PM (6 hours)",
+    "area": "Purana Golimar, Karachi Central",
+    "address": "Old KMC Quarters, Near Mewa Shah Qabrustan, Purana Golimar, Karachi",
+    "partner": "KMC Community Wing",
+    "organizer": "Waqar Ahmed",
+    "selectionReason": "High density low-income area; predominantly women & children with limited healthcare",
+    "status": "Completed",
+    "patients": {
+      "total": 320,
+      "male": 102,
+      "female": 208,
+      "children": 124,
+      "adults": 163,
+      "elderly": 13,
+      "emergency": 30,
+      "referrals": 30,
+      "pregnant": 12
+    },
+    "team": {
+      "doctors": 3,
+      "nurses": 4,
+      "paramedics": 0,
+      "volunteers": 8,
+      "pharmacists": 1,
+      "labTechs": 1
+    },
+    "vitals": {
+      "bp": "128/82",
+      "sugar": "118 mg/dL",
+      "bmi": "24.1"
+    },
+    "financials": {
+      "totalBudget": 257500,
+      "medicines": 181000,
+      "operational": 76500,
+      "zakatAmount": 181000,
+      "zakatPct": 70,
+      "nonZakatAmount": 76500,
+      "nonZakatPct": 30,
+      "costPerPatient": 804,
+      "medicineUnits": 5162
+    },
+    "diseases": [
+      {
+        "condition": "Gastric & Acidity",
+        "cases": 93,
+        "share": 29
+      },
+      {
+        "condition": "Back & Joint Pain",
+        "cases": 86,
+        "share": 27
+      },
+      {
+        "condition": "Neurological & Weakness",
+        "cases": 58,
+        "share": 18
+      },
+      {
+        "condition": "Respiratory & Allergy",
+        "cases": 54,
+        "share": 17
+      },
+      {
+        "condition": "Other",
+        "cases": 29,
+        "share": 9
+      }
+    ],
+    "expenses": [
+      {
+        "item": "Doctor Honorarium (3)",
+        "amount": 18000,
+        "source": "Donation"
+      },
+      {
+        "item": "Nursing Staff (4)",
+        "amount": 12000,
+        "source": "Donation"
+      },
+      {
+        "item": "Volunteers + Fuel (8)",
+        "amount": 20000,
+        "source": "General Fund"
+      },
+      {
+        "item": "Tent, Chairs & Furniture",
+        "amount": 15000,
+        "source": "Donation"
+      },
+      {
+        "item": "Lunch Boxes",
+        "amount": 4500,
+        "source": "General Fund"
+      },
+      {
+        "item": "Generator Fuel",
+        "amount": 4000,
+        "source": "General Fund"
+      },
+      {
+        "item": "Transport",
+        "amount": 3000,
+        "source": "General Fund"
+      },
+      {
+        "item": "Medicines (Zakat Fund)",
+        "amount": 181000,
+        "source": "Zakat"
+      }
+    ],
+    "medicinesList": [
+      {
+        "name": "Omeprazole",
+        "category": "GI",
+        "units": 1240,
+        "cost": 18600
+      },
+      {
+        "name": "Paracetamol",
+        "category": "Pain",
+        "units": 960,
+        "cost": 9600
+      },
+      {
+        "name": "Diclofenac",
+        "category": "Pain",
+        "units": 480,
+        "cost": 14400
+      },
+      {
+        "name": "Methcobalamin",
+        "category": "Neuro",
+        "units": 996,
+        "cost": 29880
+      },
+      {
+        "name": "Calcium + Vit D3",
+        "category": "Supplement",
+        "units": 720,
+        "cost": 21600
+      },
+      {
+        "name": "Loratadine",
+        "category": "Allergy",
+        "units": 432,
+        "cost": 4320
+      },
+      {
+        "name": "Cetirizine",
+        "category": "Allergy",
+        "units": 334,
+        "cost": 3340
+      }
+    ],
+    "notes": "First camp 2026. High female (65%) & children (38.75%) turnout. 70% budget spent directly on medicines. Bulk outreach formulation audit: 60% Syrups (pediatric/geriatric focus), 25% Tablets, 12% Capsules, 3% Drops."
+  },
+  {
+    "id": "FMC-02",
+    "name": "Yousuf Goath Baldiya Town Medical Camp",
+    "date": "2026-06-14",
+    "timeWindow": "09:30 AM – 03:00 PM (5.5 hours)",
+    "area": "Baldiya Town, Karachi West",
+    "address": "Yousuf Goath Community Center, Baldiya Town, Karachi",
+    "partner": "Baldiya Town Community",
+    "organizer": "Waqar Ahmed",
+    "selectionReason": "Industrial laborers; high musculoskeletal, GI & respiratory disease burden",
+    "status": "Completed",
+    "patients": {
+      "total": 254,
+      "male": 148,
+      "female": 106,
+      "children": 74,
+      "adults": 168,
+      "elderly": 9,
+      "emergency": 7,
+      "referrals": 20,
+      "pregnant": 6
+    },
+    "team": {
+      "doctors": 3,
+      "nurses": 5,
+      "paramedics": 2,
+      "volunteers": 8,
+      "pharmacists": 1,
+      "labTechs": 1
+    },
+    "vitals": {
+      "bp": "132/86",
+      "sugar": "124 mg/dL",
+      "bmi": "25.4"
+    },
+    "financials": {
+      "totalBudget": 243360,
+      "medicines": 177560,
+      "operational": 65800,
+      "zakatAmount": 177560,
+      "zakatPct": 73,
+      "nonZakatAmount": 65800,
+      "nonZakatPct": 27,
+      "costPerPatient": 957,
+      "medicineUnits": 5557
+    },
+    "diseases": [
+      {
+        "condition": "Gastric & Acidity",
+        "cases": 74,
+        "share": 29
+      },
+      {
+        "condition": "Back & Joint Pain",
+        "cases": 69,
+        "share": 27
+      },
+      {
+        "condition": "Neurological & Weakness",
+        "cases": 46,
+        "share": 18
+      },
+      {
+        "condition": "Respiratory & Allergy",
+        "cases": 43,
+        "share": 17
+      },
+      {
+        "condition": "Other",
+        "cases": 22,
+        "share": 9
+      }
+    ],
+    "expenses": [
+      {
+        "item": "Doctors (3)",
+        "amount": 12000,
+        "source": "Donation"
+      },
+      {
+        "item": "Nurses (5)",
+        "amount": 10000,
+        "source": "Donation"
+      },
+      {
+        "item": "Volunteers (5)",
+        "amount": 10000,
+        "source": "Donation"
+      },
+      {
+        "item": "Transport",
+        "amount": 15000,
+        "source": "Donation"
+      },
+      {
+        "item": "Food & Refreshments",
+        "amount": 8800,
+        "source": "General Fund"
+      },
+      {
+        "item": "Water",
+        "amount": 10000,
+        "source": "General Fund"
+      },
+      {
+        "item": "Medicines (Zakat)",
+        "amount": 171000,
+        "source": "Zakat"
+      },
+      {
+        "item": "Medical Tests (Zakat)",
+        "amount": 6560,
+        "source": "Zakat"
+      }
+    ],
+    "medicinesList": [
+      {
+        "name": "Omeprazole/Esomeprazole",
+        "category": "GI",
+        "units": 1300,
+        "cost": 19500
+      },
+      {
+        "name": "Paracetamol",
+        "category": "Pain",
+        "units": 800,
+        "cost": 8000
+      },
+      {
+        "name": "Diclofenac",
+        "category": "Pain",
+        "units": 400,
+        "cost": 12000
+      },
+      {
+        "name": "Methcobalamin",
+        "category": "Neuro",
+        "units": 996,
+        "cost": 29880
+      },
+      {
+        "name": "Calcium + Vit D3",
+        "category": "Supplement",
+        "units": 600,
+        "cost": 18000
+      },
+      {
+        "name": "Loratadine",
+        "category": "Allergy",
+        "units": 432,
+        "cost": 4320
+      },
+      {
+        "name": "Cetirizine",
+        "category": "Allergy",
+        "units": 334,
+        "cost": 3340
+      }
+    ],
+    "notes": "Target: 300. Achieved: 254. 73% Zakat-eligible. 29.1% children — urgent pediatric need."
+  },
+  {
+    "id": "FMC-03",
+    "name": "Galaxy Town Free Medical Camp — 3",
+    "date": "2026-07-05",
+    "timeWindow": "09:00 AM – 04:00 PM (7 hours)",
+    "area": "Galaxy Town, Hub, Balochistan",
+    "address": "Jamia-tul-Shariah Al-Uloom, Galaxy Town, Hub, Balochistan",
+    "partner": "Jamia-tul-Shariah Al-Uloom",
+    "organizer": "Waqar Ahmed",
+    "selectionReason": "Semi-urban industrial area; labor-class low-income families; acute healthcare shortage per WHO HeRAMS Balochistan Baseline Report 2021",
+    "status": "Completed",
+    "patients": {
+      "total": 577,
+      "male": 313,
+      "female": 264,
+      "children": 184,
+      "adults": 335,
+      "elderly": 58,
+      "emergency": 20,
+      "referrals": 0,
+      "pregnant": 0
+    },
+    "team": {
+      "doctors": 4,
+      "nurses": 4,
+      "paramedics": 3,
+      "volunteers": 10,
+      "pharmacists": 4,
+      "labTechs": 4
+    },
+    "vitals": {
+      "bp": "128/84",
+      "sugar": "118 mg/dL",
+      "bmi": "24.1"
+    },
+    "financials": {
+      "totalBudget": 505160,
+      "medicines": 401260,
+      "operational": 103900,
+      "zakatAmount": 401260,
+      "zakatPct": 79,
+      "nonZakatAmount": 103900,
+      "nonZakatPct": 21,
+      "costPerPatient": 875,
+      "medicineUnits": 11590
+    },
+    "diseases": [
+      {
+        "condition": "Pain, Fever & Body Aches",
+        "cases": 144,
+        "share": 25
+      },
+      {
+        "condition": "Respiratory, Cold & Allergy",
+        "cases": 115,
+        "share": 20
+      },
+      {
+        "condition": "Gastric, Acidity & Indigestion",
+        "cases": 87,
+        "share": 15
+      },
+      {
+        "condition": "Bacterial Infections",
+        "cases": 87,
+        "share": 15
+      },
+      {
+        "condition": "Diarrhea & Intestinal Infections",
+        "cases": 58,
+        "share": 10
+      },
+      {
+        "condition": "Nutritional Deficiency",
+        "cases": 46,
+        "share": 8
+      },
+      {
+        "condition": "Skin & Fungal Conditions",
+        "cases": 29,
+        "share": 5
+      }
+    ],
+    "expenses": [
+      {
+        "item": "Medicines — 100% Zakat (Shariah-compliant)",
+        "amount": 401260,
+        "source": "Zakat"
+      },
+      {
+        "item": "Medical team mobilization",
+        "amount": 38000,
+        "source": "General Fund"
+      },
+      {
+        "item": "Diagnostic tests & lab supplies",
+        "amount": 24500,
+        "source": "General Fund"
+      },
+      {
+        "item": "Logistics & transport",
+        "amount": 18400,
+        "source": "General Fund"
+      },
+      {
+        "item": "Camp setup & signage",
+        "amount": 12000,
+        "source": "General Fund"
+      },
+      {
+        "item": "Food, water & refreshments",
+        "amount": 11000,
+        "source": "General Fund"
+      }
+    ],
+    "medicinesList": [
+      {
+        "name": "Analgesics / Antipyretics",
+        "category": "Pain/Fever",
+        "units": 2900,
+        "cost": 100315
+      },
+      {
+        "name": "Respiratory / Antihistamines",
+        "category": "Respiratory",
+        "units": 2300,
+        "cost": 80252
+      },
+      {
+        "name": "Gastrointestinal (GI)",
+        "category": "GI",
+        "units": 1750,
+        "cost": 60189
+      },
+      {
+        "name": "Antibiotics",
+        "category": "Antibiotic",
+        "units": 1740,
+        "cost": 60189
+      },
+      {
+        "name": "Antidiarrheals / ORS",
+        "category": "GI/ORS",
+        "units": 1160,
+        "cost": 40126
+      },
+      {
+        "name": "Vitamins & Minerals",
+        "category": "Supplement",
+        "units": 930,
+        "cost": 32101
+      },
+      {
+        "name": "Dermatology / Antifungals",
+        "category": "Skin",
+        "units": 580,
+        "cost": 20063
+      }
+    ],
+    "notes": "577 patients in one day — 19-member clinical team + 10 volunteers. 31.9% children under 12 (184). 20 emergencies fully treated on-site, ZERO referrals. 79.4% of budget directly on medicines."
+  },
+  {
+    "id": "FMC-04",
+    "name": "Free Medical Camp-4 — Galaxy Town",
+    "date": "2026-07-26",
+    "timeWindow": "09:00 AM – 05:00 PM (8 hours)",
+    "area": "Galaxy Town, Hub, Balochistan",
+    "address": "Jamia-tul-Shariah Al-Uloom, Galaxy Town, Hub, Balochistan",
+    "partner": "Jamia-tul-Shariah Al-Uloom",
+    "organizer": "Waqar Ahmed",
+    "selectionReason": "Fourth camp of the 2026 programme and second at this high-need Balochistan site; capacity scaled up after FMC-03 demand exceeded targets",
+    "status": "Completed",
+    "patients": {
+      "total": 619,
+      "male": 228,
+      "female": 102,
+      "children": 268,
+      "adults": 330,
+      "elderly": 21,
+      "emergency": 0,
+      "referrals": 0,
+      "pregnant": 0
+    },
+    "team": {
+      "doctors": 5,
+      "nurses": 0,
+      "paramedics": 0,
+      "volunteers": 15,
+      "pharmacists": 0,
+      "labTechs": 0
+    },
+    "vitals": {
+      "bp": "—",
+      "sugar": "—",
+      "bmi": "—"
+    },
+    "financials": {
+      "totalBudget": 605851,
+      "medicines": 497291,
+      "operational": 108560,
+      "zakatAmount": 497291,
+      "zakatPct": 82,
+      "nonZakatAmount": 108560,
+      "nonZakatPct": 18,
+      "costPerPatient": 979,
+      "medicineUnits": 0
+    },
+    "diseases": [
+      {
+        "condition": "Nutrition, Multivitamins, Bone Health & Anemia",
+        "cases": 116,
+        "share": 19
+      },
+      {
+        "condition": "Pain, Fever & Musculoskeletal Management",
+        "cases": 103,
+        "share": 17
+      },
+      {
+        "condition": "Gastrointestinal, Acidity, Nausea & ORS",
+        "cases": 103,
+        "share": 17
+      },
+      {
+        "condition": "Dermatology & Skin Disease Management",
+        "cases": 90,
+        "share": 15
+      },
+      {
+        "condition": "Antimicrobial & Anti-Infective Coverage",
+        "cases": 90,
+        "share": 15
+      },
+      {
+        "condition": "Allergies, Respiratory & Antihistamines",
+        "cases": 65,
+        "share": 10
+      },
+      {
+        "condition": "Cardiovascular & Anorectal Conditions",
+        "cases": 52,
+        "share": 7
+      }
+    ],
+    "expenses": [
+      {
+        "item": "Staff Honorarium & Volunteers (5 Doctors, 15 Support)",
+        "amount": 42000,
+        "source": "Non-Zakat Fund"
+      },
+      {
+        "item": "Camp Setup & Infrastructure (Jattak Tent House)",
+        "amount": 27560,
+        "source": "Non-Zakat Fund"
+      },
+      {
+        "item": "Transportation & Field Logistics",
+        "amount": 20000,
+        "source": "Non-Zakat Fund"
+      },
+      {
+        "item": "Food & Catering Services (Madina Pakwan)",
+        "amount": 19000,
+        "source": "Non-Zakat Fund"
+      },
+      {
+        "item": "Therapeutic Medicines Supply (39 Generic Groups, 48 Lines)",
+        "amount": 497291,
+        "source": "Zakat"
+      }
+    ],
+    "medicinesList": [
+      {
+        "name": "Nutrition, Bone Health & Anemia",
+        "category": "9 Generic Lines",
+        "units": 9,
+        "cost": 93242
+      },
+      {
+        "name": "Pain, Fever & Musculoskeletal",
+        "category": "8 Generic Lines",
+        "units": 8,
+        "cost": 82882
+      },
+      {
+        "name": "Gastrointestinal, Acidity & ORS",
+        "category": "8 Generic Lines",
+        "units": 8,
+        "cost": 82882
+      },
+      {
+        "name": "Dermatology & Skin Disease",
+        "category": "7 Generic Lines",
+        "units": 7,
+        "cost": 72521
+      },
+      {
+        "name": "Antimicrobial & Anti-Infective",
+        "category": "7 Generic Lines",
+        "units": 7,
+        "cost": 72521
+      },
+      {
+        "name": "Allergies & Respiratory",
+        "category": "5 Generic Lines",
+        "units": 5,
+        "cost": 51757
+      },
+      {
+        "name": "Cardiovascular & Anorectal",
+        "category": "4 Generic Lines",
+        "units": 4,
+        "cost": 41486
+      }
+    ],
+    "notes": "619 patients examined — fourth camp of the programme and second at Galaxy Town, Hub. Grand total PKR 605,851 (gross PKR 618,851 less PKR 13,000 adjustment). Follow-up gateway: patients needing advanced care registered for free Ultrasound, X-Ray, lab tests at Khidmat-e-Alam Medical Centre, Nazimabad No. 1.",
+    "dataNote": "Per-category medicine costs shown are a proportional allocation of the PKR 497,291 Zakat medicine budget by generic-line share — the official Post-Camp Report itemised only the combined medicine total."
+  },
+  {
+    "id": "FMC-05",
+    "name": "Free Medical Camp-5 — Thatta",
+    "date": "2026-08-16",
+    "timeWindow": "10:00 AM – 04:00 PM (6 hours)",
+    "area": "Thatta, Sindh",
+    "address": "Goath Chatto Chand, Pang/Panjh Mori, Thatta, Sindh",
+    "partner": "Local Community Elders",
+    "organizer": "Waqar Ahmed",
+    "selectionReason": "Underdeveloped, 80%+ rural coastal population, high self-reported illness prevalence and high river-flood hazard classification (World Bank GFDRR)",
+    "status": "Completed",
+    "floodHazard": true,
+    "patients": {
+      "total": 548,
+      "male": 130,
+      "female": 130,
+      "children": 230,
+      "adults": 260,
+      "elderly": 58,
+      "emergency": 3,
+      "referrals": 0,
+      "pregnant": 0
+    },
+    "team": {
+      "doctors": 4,
+      "nurses": 4,
+      "paramedics": 2,
+      "volunteers": 8,
+      "pharmacists": 2,
+      "labTechs": 2
+    },
+    "vitals": {
+      "bp": "—",
+      "sugar": "—",
+      "bmi": "—"
+    },
+    "financials": {
+      "totalBudget": 419506,
+      "medicines": 267806,
+      "operational": 151700,
+      "zakatAmount": 267806,
+      "zakatPct": 64,
+      "nonZakatAmount": 151700,
+      "nonZakatPct": 36,
+      "costPerPatient": 766,
+      "medicineUnits": 0
+    },
+    "diseases": [],
+    "expenses": [
+      {
+        "item": "Staff & Doctors Fees",
+        "amount": 64000,
+        "source": "Non-Zakat Fund"
+      },
+      {
+        "item": "Coaster (Transport)",
+        "amount": 35000,
+        "source": "Non-Zakat Fund"
+      },
+      {
+        "item": "Lunch",
+        "amount": 28700,
+        "source": "Non-Zakat Fund"
+      },
+      {
+        "item": "Tent",
+        "amount": 16000,
+        "source": "Non-Zakat Fund"
+      },
+      {
+        "item": "Photography",
+        "amount": 5000,
+        "source": "Non-Zakat Fund"
+      },
+      {
+        "item": "Ambulance / Fuel",
+        "amount": 3000,
+        "source": "Non-Zakat Fund"
+      },
+      {
+        "item": "Medicines Supply (Zakat Fund)",
+        "amount": 267806,
+        "source": "Zakat"
+      }
+    ],
+    "medicinesList": [
+      {
+        "name": "Complete Medicine Supply (Zakat Fund)",
+        "category": "Category breakdown not logged",
+        "units": 0,
+        "cost": 267806
+      }
+    ],
+    "notes": "548 patients served in one day at Goath Chatto Chand, Thatta. Beneficiary mix: 42% children under 14, 11% elderly 60+ — combined vulnerable groups were 53% of all patients. Location risk note: Thatta district carries a high river-flood hazard classification.",
+    "dataNote": "Post-Camp Donor Report did not itemise medicines by therapeutic category or log diagnosis categories per patient — only the combined Zakat medicine total (PKR 267,806) was recorded. Resolved in Field EMR Module."
+  },
+  {
+    "id": "FMC-06",
+    "name": "Free Medical Camp 6 — Orangi Town",
+    "date": "2026-10-04",
+    "timeWindow": "10:00 AM – 04:00 PM (6 hours)",
+    "area": "Orangi Town, Karachi",
+    "address": "Muslim Millat School, Auliya Masjid Road, Orangi Town, Karachi",
+    "partner": "Muslim Millat School",
+    "organizer": "Waqar Ahmed",
+    "selectionReason": "Sixth camp of the 2026 programme, serving a vulnerable Karachi community at Muslim Millat School",
+    "status": "Completed",
+    "patients": {
+      "total": 594,
+      "male": 81,
+      "female": 230,
+      "children": 253,
+      "adults": 311,
+      "elderly": 30,
+      "emergency": 0,
+      "referrals": 0,
+      "pregnant": 0
+    },
+    "team": {
+      "doctors": 3,
+      "nurses": 0,
+      "paramedics": 0,
+      "volunteers": 12,
+      "pharmacists": 4,
+      "labTechs": 0,
+      "namedRoster": [
+        "Dr. Ashowk Kumar (Doctor - PKR 5,000)",
+        "Dr. Nadia (Doctor - PKR 5,000)",
+        "Dr. Saeed (Doctor - PKR 5,000)",
+        "Abbas, Abdul Rehman, Uzair, Abdul Wahab (Pharmacists - PKR 2,000 each)",
+        "Jawaria, Siddique, Rabia Bibi, Zubair, Areeb Meraj, Khadija, Qasim, Dilawar, Abdullah Asim, Nabiya, Falak, Abdullah Akram (12 Volunteers - PKR 2,000 each)"
+      ]
+    },
+    "vitals": {
+      "bp": "—",
+      "sugar": "—",
+      "bmi": "—"
+    },
+    "financials": {
+      "totalBudget": 385194,
+      "medicines": 338194,
+      "operational": 47000,
+      "zakatAmount": 338194,
+      "zakatPct": 88,
+      "nonZakatAmount": 47000,
+      "nonZakatPct": 12,
+      "costPerPatient": 648,
+      "medicineUnits": 4191,
+      "roundingVariance": 0.83
+    },
+    "diseases": [
+      {
+        "condition": "Infection Treatment (Dispensed Share)",
+        "cases": 188,
+        "share": 31.6
+      },
+      {
+        "condition": "Pain & Fever (Dispensed Share)",
+        "cases": 187,
+        "share": 31.5
+      },
+      {
+        "condition": "Allergy Symptom Relief (Dispensed Share)",
+        "cases": 143,
+        "share": 24.0
+      },
+      {
+        "condition": "Acid Suppression (Dispensed Share)",
+        "cases": 47,
+        "share": 7.9
+      },
+      {
+        "condition": "Vitamin B12 Support (Dispensed Share)",
+        "cases": 29,
+        "share": 4.8
+      }
+    ],
+    "expenses": [
+      {
+        "item": "Doctors Fees (3 doctors @ PKR 5,000)",
+        "amount": 15000,
+        "source": "Non-Zakat Fund"
+      },
+      {
+        "item": "Pharmacy Staff Fees (4 staff @ PKR 2,000)",
+        "amount": 8000,
+        "source": "Non-Zakat Fund"
+      },
+      {
+        "item": "Volunteer Fees (12 volunteers @ PKR 2,000)",
+        "amount": 24000,
+        "source": "Non-Zakat Fund"
+      },
+      {
+        "item": "Medicines Supply (39 Generics)",
+        "amount": 338194,
+        "source": "Zakat"
+      }
+    ],
+    "medicinesList": [
+      {
+        "name": "Infection Treatment (Ciprofloxacin 924, Azithromycin 227, etc.)",
+        "category": "31.6% of solid units",
+        "units": 1323,
+        "cost": 0
+      },
+      {
+        "name": "Pain and Fever (Paracetamol 1,000, etc.)",
+        "category": "31.5% of solid units",
+        "units": 1320,
+        "cost": 0
+      },
+      {
+        "name": "Allergy Symptom Relief (Cetirizine 947, etc.)",
+        "category": "24.0% of solid units",
+        "units": 1007,
+        "cost": 0
+      },
+      {
+        "name": "Acid Suppression (Omeprazole 189, etc.)",
+        "category": "7.9% of solid units",
+        "units": 329,
+        "cost": 0
+      },
+      {
+        "name": "Vitamin B12 Support (Methylcobalamin 200)",
+        "category": "4.8% of solid units",
+        "units": 200,
+        "cost": 0
+      },
+      {
+        "name": "Diarrhea Symptom Relief",
+        "category": "0.3% of solid units",
+        "units": 12,
+        "cost": 0
+      }
+    ],
+    "notes": "594 attendees in one day at Muslim Millat School, Orangi Town. Highest Zakat efficiency ratio (87.8% directly on medicines) and lowest actual cost per patient (PKR 648.47).",
+    "dataNote": "Inventory reflects billing quantities from receipt (PKR 338,194.83 printed vs PKR 338,194 confirmed = PKR 0.83 variance). Excluded from 4,191 solid unit count: 294 mixed liquid/cream/sachet units."
+  }
+]

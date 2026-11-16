@@ -1,0 +1,16 @@
+node_modules
+.next
+.env
+.env.local
+.env.production
+.env.*
+!.env.example
+.netlify/
+.vercel/
+*.log
+.DS_Store
+coverage
+.local/
+tsconfig.tsbuildinfo
+playwright-report/
+test-results/

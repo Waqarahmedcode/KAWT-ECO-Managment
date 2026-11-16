@@ -1,0 +1,8 @@
+'use client';
+import { BarChart,Bar,CartesianGrid,XAxis,YAxis,Tooltip,Legend,ResponsiveContainer } from 'recharts';
+import type { CampView } from '@/lib/dashboard';
+import { Card } from './Controls';
+export function ImpactCharts({camps}:{camps:CampView[]}){
+ const data=camps.filter(c=>c.patients>0).map(c=>({camp:c.id,patients:c.patients,Zakat:c.zakat,General:c.general}));
+ return <div className="grid gap-6 xl:grid-cols-2"><Card title="Camp reach" description="Recorded attendees by camp; historical aggregates and current operational cohorts retain their source boundaries."><div className="h-72 min-w-0"><ResponsiveContainer width="100%" height="100%"><BarChart data={data}><CartesianGrid vertical={false} stroke="#e7eee6"/><XAxis dataKey="camp" tick={{fontSize:11}}/><YAxis allowDecimals={false} tick={{fontSize:11}}/><Tooltip/><Bar dataKey="patients" name="Attendees" fill="#0B5D3B" radius={[4,4,0,0]}/></BarChart></ResponsiveContainer></div></Card><Card title="Purpose-restricted expenditure" description="PKR amounts from source reports and net operational journal postings."><div className="h-72 min-w-0"><ResponsiveContainer width="100%" height="100%"><BarChart data={data}><CartesianGrid vertical={false} stroke="#e7eee6"/><XAxis dataKey="camp" tick={{fontSize:11}}/><YAxis tickFormatter={value=>`${Number(value)/1000}k`} tick={{fontSize:11}}/><Tooltip formatter={value=>`PKR ${Number(value).toLocaleString('en-PK')}`}/><Legend/><Bar dataKey="Zakat" stackId="funds" fill="#0B5D3B"/><Bar dataKey="General" stackId="funds" fill="#C9A227" radius={[4,4,0,0]}/></BarChart></ResponsiveContainer></div></Card></div>;
+}

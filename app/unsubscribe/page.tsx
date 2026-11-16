@@ -1,0 +1,4 @@
+'use client';
+import { useState } from 'react';
+import { api,primary } from '@/components/workspace/Controls';
+export default function Unsubscribe(){const [message,setMessage]=useState('');return <main className="mx-auto max-w-lg p-8"><h1 className="font-serif text-3xl text-[#0B5D3B]">Communication preferences</h1><p className="my-5 text-sm leading-relaxed">Stop fundraising and impact messages. Transactional receipt preferences remain separate.</p><button className={primary} onClick={async()=>{try{await api('/api/preferences/unsubscribe',{token:new URLSearchParams(window.location.search).get('token')});setMessage('Your fundraising communications have been stopped.')}catch(error){setMessage(error instanceof Error?error.message:'Unable to update preferences')}}}>Stop fundraising messages</button><p role="status" className="mt-5 text-sm">{message}</p></main>}

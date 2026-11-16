@@ -1,0 +1,50 @@
+[
+  {
+    "code": "FMC-07",
+    "area": "Ibrahim Hyderi (Coastal Settlement)",
+    "targetDate": "Nov 2026",
+    "targetPatients": 550,
+    "estBudget": 390000,
+    "hazard": "Coastal Water Scarcity"
+  },
+  {
+    "code": "FMC-08",
+    "area": "Gadap Town (Rural Outskirts)",
+    "targetDate": "Nov 2026",
+    "targetPatients": 500,
+    "estBudget": 360000,
+    "hazard": "Low Road Connectivity"
+  },
+  {
+    "code": "FMC-09",
+    "area": "Surjani Town Sector 7",
+    "targetDate": "Dec 2026",
+    "targetPatients": 600,
+    "estBudget": 410000,
+    "hazard": "High Pediatric GI Burden"
+  },
+  {
+    "code": "FMC-10",
+    "area": "Keamari / Machar Colony",
+    "targetDate": "Dec 2026",
+    "targetPatients": 650,
+    "estBudget": 440000,
+    "hazard": "Respiratory & Waterborne"
+  },
+  {
+    "code": "FMC-11",
+    "area": "Malir Rural Villages",
+    "targetDate": "Jan 2027",
+    "targetPatients": 450,
+    "estBudget": 330000,
+    "hazard": "Maternal Anemia Focus"
+  },
+  {
+    "code": "FMC-12",
+    "area": "Lyari / Agra Taj Colony",
+    "targetDate": "Jan 2027",
+    "targetPatients": 600,
+    "estBudget": 400000,
+    "hazard": "High Urban Density"
+  }
+]

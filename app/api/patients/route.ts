@@ -1,0 +1,11 @@
+import { sameOrigin } from '@/lib/actor-db';
+import { z } from 'zod';
+import { requireRole,authError } from '@/lib/auth';
+import { getSupabase } from '@/lib/supabase';
+const schema=z.object({camp_id:z.string().regex(/^FMC-\d{2,3}$/),display_name:z.string().max(140).optional().nullable(),age_years:z.coerce.number().int().min(0).max(120),gender:z.enum(['female','male','undisclosed']),pregnancy_status:z.enum(['pregnant','not_pregnant','not_applicable','not_recorded']).default('not_recorded'),bp_systolic:z.coerce.number().int().min(40).max(300).nullable().optional(),bp_diastolic:z.coerce.number().int().min(20).max(220).nullable().optional(),blood_glucose_mg_dl:z.coerce.number().min(10).max(1000).nullable().optional(),bmi:z.coerce.number().min(5).max(100).nullable().optional(),consent_recorded:z.boolean().default(false)});
+const intakeSchema=schema.extend({is_emergency:z.boolean().default(false),client_request_id:z.string().uuid().optional()});
+export async function POST(request:Request){try{sameOrigin(request);const {user}=await requireRole(['admin','camp_manager','doctor']);const input=intakeSchema.parse(await request.json());const supabase=await getSupabase();
+ if(input.client_request_id){const prior=await supabase.from('camp_patients').select('id,uid,camp_id,age_years,age_band,gender,registration_time').eq('created_by',user.id).eq('client_request_id',input.client_request_id).maybeSingle();if(prior.data)return Response.json({patient:prior.data,replayed:true})}
+ const {data,error}=await supabase.from('camp_patients').insert({...input,created_by:user.id}).select('id,uid,camp_id,age_years,age_band,gender,registration_time').single();
+ if(error?.code==='23505'&&input.client_request_id){const prior=await supabase.from('camp_patients').select('id,uid,camp_id,age_years,age_band,gender,registration_time').eq('created_by',user.id).eq('client_request_id',input.client_request_id).single();if(prior.data)return Response.json({patient:prior.data,replayed:true})}
+ if(error)return Response.json({error:error.message},{status:409});return Response.json({patient:data},{status:201})}catch(e){if(e instanceof z.ZodError)return Response.json({error:e.flatten()},{status:400});return authError(e)}}

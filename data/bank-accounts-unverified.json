@@ -1,0 +1,51 @@
+[
+  {
+    "category": "I. Zakat Accounts (100% Medicines & Eligible Patients)",
+    "bank": "Meezan Bank",
+    "acc": "01850112385752",
+    "iban": "PK26MEZN0001850112385752",
+    "badge": "Zakat Only"
+  },
+  {
+    "category": "I. Zakat Accounts (100% Medicines & Eligible Patients)",
+    "bank": "Bank Islami",
+    "acc": "123100045020001",
+    "iban": "PK04BKIP0123100045020001",
+    "badge": "Zakat Only"
+  },
+  {
+    "category": "I. Zakat Accounts (100% Medicines & Eligible Patients)",
+    "bank": "Soneri Bank",
+    "acc": "20012902299",
+    "iban": "PK88SONE0002420012902299",
+    "badge": "Zakat Only"
+  },
+  {
+    "category": "I. Zakat Accounts (100% Medicines & Eligible Patients)",
+    "bank": "Faysal Bank",
+    "acc": "3063301000004720",
+    "iban": "PK15FAYS30363301000004720",
+    "badge": "Zakat Only"
+  },
+  {
+    "category": "II. Dedicated Welfare & Medicine Account",
+    "bank": "HabibMetro Bank",
+    "acc": "069889293017140102177",
+    "iban": "PK35MPBL9889177140102177",
+    "badge": "Zakat-Eligible"
+  },
+  {
+    "category": "III. Free Medical Camp Fund",
+    "bank": "UBL (United Bank Ltd)",
+    "acc": "370633475",
+    "iban": "PK78UNIL0109000370633475",
+    "badge": "Camp Sponsorship"
+  },
+  {
+    "category": "IV. General Donation Account (Sayed, Hashmi, Non-Muslim, Operations & Capital)",
+    "bank": "MCB Bank",
+    "acc": "0124901010023773",
+    "iban": "PK13MUCB0124901010023773",
+    "badge": "General / Operations"
+  }
+]

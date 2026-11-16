@@ -1,0 +1,6 @@
+@tailwind base;@tailwind components;@tailwind utilities;
+:root{color-scheme:light;--emerald:#0B5D3B;--gold:#C9A227;--pearl:#FDFBF7;--ink:#14231b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:#f4f7f4;font-family:Inter,Arial,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.5}
+.print-only{display:none}.report-a4{background:white;max-width:794px;margin:auto;box-shadow:0 6px 40px #13291d22;min-height:1123px}
+@media print{@page{size:A4 portrait;margin:0}body{background:white!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.no-print{display:none!important}.print-only{display:block!important}.report-a4{width:210mm;min-height:297mm;max-width:none;box-shadow:none;margin:0;padding:15mm!important}.print-break{break-before:page}}
