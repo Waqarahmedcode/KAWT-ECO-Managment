@@ -1,0 +1,87 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import { chromium, request } from '@playwright/test';
+
+const base=process.env.KAWT_PREVIEW_TEST_URL||'http://127.0.0.1:3002';
+const missing=process.env.KAWT_UNCONFIGURED_TEST_URL;
+for(const url of [base,missing].filter(Boolean))if(!['127.0.0.1','localhost'].includes(new URL(url).hostname))throw new Error('Preview validation refuses remote test targets');
+const output=path.resolve('.local/preview-validation');fs.mkdirSync(output,{recursive:true,mode:0o700});
+const browser=await chromium.launch({headless:true,executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH||'/usr/bin/chromium',args:['--no-sandbox']});
+const results=[];
+const pass=(name)=>{results.push(name);console.log('PASS:',name)};
+let api;
+try {
+ const context=await browser.newContext({viewport:{width:1440,height:1100}});
+ const page=await context.newPage();const errors=[];const writes=[];
+ page.on('pageerror',e=>errors.push(e.message));
+ page.on('request',r=>{if(new URL(r.url()).origin===new URL(base).origin&&new URL(r.url()).pathname.startsWith('/api/')&&!['GET','HEAD','OPTIONS'].includes(r.method()))writes.push(r.url())});
+ await page.goto(base+'/');await page.waitForURL('**/preview');
+ await page.getByRole('heading',{name:'Humanitarian impact at a glance'}).waitFor();
+ await page.getByText('SOURCE PREVIEW · READ ONLY',{exact:true}).waitFor();
+ let text=await page.locator('body').innerText();
+ for(const total of ['2,912','2,416,571','1,863,111','553,460'])assert(text.includes(total),'Missing source total '+total);
+ await page.locator('.recharts-pie-sector').first().waitFor();
+ await page.evaluate(()=>document.fonts.ready);
+ await page.screenshot({path:path.join(output,'public-desktop.png'),fullPage:true});
+ pass('public root opens the explicit read-only preview and source totals match');
+ await page.getByRole('button',{name:'18-Camp Programme',exact:true}).click();
+ const rows=page.locator('tbody tr');assert.equal(await rows.count(),12);
+ const ids=await rows.locator('td:first-child').allTextContents();
+ assert.deepEqual(ids,Array.from({length:12},(_,i)=>'FMC-'+String(i+1).padStart(2,'0')));
+ assert(!(await page.locator('body').innerText()).includes('Unassigned programme slot'));
+ pass('tracker contains exactly twelve supplied camps with no generated slot records');
+ await page.getByRole('button',{name:'Field Patient Intake',exact:true}).click();
+ await page.getByRole('button',{name:'Register patient & generate UID'}).isDisabled().then(v=>assert(v));
+ await page.locator('form').evaluateAll(forms=>forms.forEach(form=>form.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}))));
+ await page.waitForTimeout(250);assert.deepEqual(writes,[]);
+ pass('disabled and programmatically submitted preview forms make no API writes');
+ await page.getByRole('button',{name:'Executive Overview',exact:true}).click();
+ await page.setViewportSize({width:390,height:844});
+ await page.screenshot({path:path.join(output,'public-mobile.png'),fullPage:true});
+ assert(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+1),'Mobile layout overflows horizontally');
+ assert.deepEqual(errors,[]);
+ pass('public desktop/mobile views render without uncaught browser errors');
+ const unauthed=await request.newContext({baseURL:base});
+ const denied=await unauthed.get('/api/workspace');assert.equal(denied.status(),401);
+ await unauthed.dispose();pass('anonymous operational workspace access is rejected');
+ await context.close();
+ const accountFile=process.env.KAWT_PREVIEW_ACCOUNTS_PATH;
+ if(accountFile){
+  const accounts=JSON.parse(fs.readFileSync(accountFile,'utf8'));
+  const admin=accounts.find(a=>a.role==='admin');assert(admin);
+  api=await request.newContext({baseURL:base});
+  const signed=await api.post('/api/auth/session',{data:{action:'signin',email:admin.email,password:admin.password}});assert.equal(signed.status(),200);
+  const staff=await browser.newContext({storageState:await api.storageState(),viewport:{width:1440,height:1100}});
+  const p=await staff.newPage();await p.goto(base+'/dashboard');await p.getByRole('heading',{name:'Humanitarian impact at a glance'}).waitFor();
+  assert(!(await p.locator('body').innerText()).includes('SOURCE PREVIEW · READ ONLY'));
+  await p.getByText(/Loading your authorized records/).waitFor({state:'hidden'});
+  await p.locator('.recharts-bar-rectangle').first().waitFor();
+  await p.waitForTimeout(1700);
+  await p.screenshot({path:path.join(output,'staff-desktop.png'),fullPage:true});
+  await p.setViewportSize({width:390,height:844});await p.screenshot({path:path.join(output,'staff-mobile.png'),fullPage:true});
+  await staff.close();pass('authenticated staff dashboard works and is visually separate from the public preview');
+  const donor=accounts.find(a=>a.role==='donor');assert(donor);
+  const donorApi=await request.newContext({baseURL:base});
+  assert.equal((await donorApi.post('/api/auth/session',{data:{action:'signin',email:donor.email,password:donor.password}})).status(),200);
+  const own=await donorApi.get('/api/workspace');assert.equal(own.status(),200);const data=await own.json();assert.equal(data.tables.camp_patients,undefined);assert.equal(data.tables.camp_financial_ledgers,undefined);await donorApi.dispose();
+  const storage=await api.post('/api/integrations/status',{data:{provider:'supabase'}});assert.equal(storage.status(),200);
+  pass('donor access remains scoped and authenticated Supabase connection check passes');
+  const offline=await browser.newContext({storageState:await api.storageState(),viewport:{width:1280,height:900}});
+  const op=await offline.newPage();await op.goto(base+'/offline');await op.getByRole('heading',{name:'Encrypted offline intake'}).waitFor();
+  await op.waitForFunction(()=>Boolean(localStorage.getItem('kawt-offline-context')));
+  await op.evaluate(()=>navigator.serviceWorker.ready);await op.reload();await op.getByRole('heading',{name:'Encrypted offline intake'}).waitFor();
+  await offline.setOffline(true);await op.reload();await op.getByRole('heading',{name:'Encrypted offline intake'}).waitFor();
+  const privateCache=await op.evaluate(async()=>{const names=await caches.keys();const keys=(await Promise.all(names.map(async n=>(await (await caches.open(n)).keys()).map(r=>new URL(r.url).pathname)))).flat();return keys.filter(p=>p.startsWith('/api/')||p.startsWith('/auth/')||p.startsWith('/dashboard')||p.startsWith('/referrals/'))});assert.deepEqual(privateCache,[]);
+  await offline.close();pass('production offline shell reloads without caching private API/dashboard responses or creating drafts');
+ }
+ if(missing){
+  const m=await browser.newPage();await m.goto(missing+'/dashboard');await m.getByRole('heading',{name:'Staff workspace unavailable'}).waitFor();
+  assert(!(await m.locator('body').innerText()).includes('Humanitarian impact at a glance'));
+  await m.screenshot({path:path.join(output,'backend-unavailable.png'),fullPage:true});
+  await m.goto(missing+'/preview');await m.getByRole('heading',{name:'Humanitarian impact at a glance'}).waitFor();await m.close();
+  pass('unconfigured staff route is explicit while its public preview still works');
+ }
+ fs.writeFileSync(path.join(output,'results.json'),JSON.stringify({passed:results.length,checks:results,recordedAt:new Date().toISOString(),businessRecordsCreated:0},null,2),{mode:0o600});
+ console.log(results.length+' preview checks passed; no synthetic business records were created.');
+} finally {await api?.dispose();await browser.close()}

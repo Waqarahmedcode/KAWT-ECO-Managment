@@ -1,11 +1,10 @@
 import 'server-only';
 import { sql } from 'drizzle-orm';
 import { getDb } from './db';
-import { historicalCamps } from './source';
+import { sourcePreviewRows } from './source-preview';
 export type CampView={id:string;name:string;date:string|null;area:string;status:'completed'|'planned'|'approved'|'site_review'|'in_progress'|'cancelled';patients:number;zakat:number;general:number;spend:number;medicineUnits:number;emergencies:number;referrals:number;dataNote:string|null;source:'legacy_source'|'operational';maleRecorded:number|null;femaleRecorded:number|null;childrenRecorded:number|null;adultsRecorded:number|null;elderlyRecorded:number|null;livePatients:number};
-function previewRows():CampView[]{return historicalCamps.map(c=>({id:c.id,name:c.name,date:c.date,area:c.area,status:'completed',patients:c.patients.total,zakat:c.financials.zakatAmount,general:c.financials.nonZakatAmount,spend:c.financials.totalBudget,medicineUnits:c.financials.medicineUnits,emergencies:c.patients.emergency,referrals:c.patients.referrals,dataNote:c.dataNote??null,source:'legacy_source',maleRecorded:c.patients.male,femaleRecorded:c.patients.female,childrenRecorded:c.patients.children,adultsRecorded:c.patients.adults,elderlyRecorded:c.patients.elderly,livePatients:0}));}
 export async function dashboardRows(live:boolean):Promise<CampView[]>{
- if(!live)return previewRows();
+ if(!live)return sourcePreviewRows();
  const db=getDb();
  const result=await db.execute(sql`select c.id,c.title as name,c.camp_date::text as date,c.area,c.status::text as status,c.source_type as source,
  case when h.camp_id is not null then h.total_patients else coalesce((select count(*) from public.camp_patients p where p.camp_id=c.id),0)::int end as patients,

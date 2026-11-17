@@ -13,9 +13,10 @@
     "db:seed": "node --env-file-if-exists=.env.local --import tsx db/seed.ts",
     "test:data": "python3 tests/audit_data.py",
     "db:local": "node scripts/local-start.mjs",
-    "test:unit": "node --import tsx --test tests/contracts.test.ts",
+    "test:unit": "node --import tsx --test tests/contracts.test.ts tests/source-preview.test.ts",
     "test:workflows": "node --env-file=.env.local tests/workflows.mjs",
-    "integrations:dry-run": "node --env-file-if-exists=.env.local --import tsx scripts/process-integrations.ts"
+    "integrations:dry-run": "node --env-file-if-exists=.env.local --import tsx scripts/process-integrations.ts",
+    "test:preview": "node tests/preview.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.6.1",
@@ -50,6 +51,6 @@
     "typescript": "^5.8.0"
   },
   "engines": {
-    "node": ">=22.0.0"
+    "node": "24.x"
   }
 }

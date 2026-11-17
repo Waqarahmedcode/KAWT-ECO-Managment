@@ -2,7 +2,7 @@
 
 Next.js desktop operations, responsive field intake and a public donor portal backed by one Supabase PostgreSQL database. The separate Android project is preserved outside this directory.
 
-1. Install Node 22+, Docker and Python 3, then run `npm ci`.
+1. Install Node 24, Docker and Python 3, then run `npm ci`.
 2. Run `npm run db:local` to start and validate the isolated local Supabase stack, apply migrations, prepare development roles and seed the six source camps plus twelve planning slots.
 3. Run `npm run dev -- --hostname 127.0.0.1 --port 3001` on the same machine. Local development credentials are in the private `.local/accounts.json` file; they are never included in the delivery ZIP.
 
@@ -15,3 +15,5 @@ The workflow suite creates temporary synthetic fixtures. Do not run it on the so
 For a free preview on your own PC, see [Windows local preview](docs/WINDOWS-PREVIEW.md).
 
 See [architecture](docs/ARCHITECTURE.md), [database](docs/DATABASE.md), [phased execution guide](docs/DEVELOPMENT.md), [integration configuration](docs/INTEGRATIONS.md), and [requirements/status](docs/REQUIREMENTS.md). Remote database bindings, merchant accounts and live messaging are intentionally pending.
+
+The public source preview is `/preview`; authenticated operations are `/dashboard`. See [preview handoff](docs/PREVIEW-HANDOFF.md) and [architecture review](docs/ARCHITECTURE-REVIEW.md).
