@@ -9,5 +9,7 @@
 [functions]
   included_files = ["data/source-report.html", "public/brand/kawt-logo.png"]
 
-# Netlify detects Next.js from package.json and uses its Next.js runtime.
+# Required for Git-based builds as well as local CLI deployments.
 # This source package requires a build; it is not a static drag-and-drop site.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

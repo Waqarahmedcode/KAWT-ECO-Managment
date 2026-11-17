@@ -17,6 +17,8 @@
 
 ## Hosting
 
+The official `@netlify/plugin-nextjs` runtime is explicitly declared in `netlify.toml` and enabled for the staging site. Publishing raw `.next` output without the runtime produces missing routes/functions.
+
 Use a new Netlify staging site and preserve existing sites. Link the repository root of `Waqarahmedcode/KAWT-ECO-Managment`, branch `main`, Node 24, frozen dependency installation and the committed Netlify Next.js build configuration. A static drag-and-drop upload/GitHub Pages cannot serve these server APIs. This source does not itself prove that a Netlify site has been authorized or deployed; the handoff status must include verified URLs or the precise pending blocker.
 
 The source preview can be deployed before a database is ready. Staff operation requires private `DATABASE_URL`, public Supabase URL and publishable key, the exact HTTPS site origin and a private rate-limit salt. Never copy loopback/local development credentials to hosting. Configure Supabase Auth redirects for that HTTPS origin. Rotate passwords exposed in chat before real remote release.
