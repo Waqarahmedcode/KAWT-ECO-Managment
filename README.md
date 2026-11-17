@@ -17,3 +17,5 @@ For a free preview on your own PC, see [Windows local preview](docs/WINDOWS-PREV
 See [architecture](docs/ARCHITECTURE.md), [database](docs/DATABASE.md), [phased execution guide](docs/DEVELOPMENT.md), [integration configuration](docs/INTEGRATIONS.md), and [requirements/status](docs/REQUIREMENTS.md). Remote database bindings, merchant accounts and live messaging are intentionally pending.
 
 The public source preview is `/preview`; authenticated operations are `/dashboard`. See [preview handoff](docs/PREVIEW-HANDOFF.md) and [architecture review](docs/ARCHITECTURE-REVIEW.md).
+
+Verified local screenshots: [public preview](docs/screenshots/public-desktop.png) and [authenticated staff view](docs/screenshots/staff-desktop.png). These are screenshot evidence, not live Netlify URLs.

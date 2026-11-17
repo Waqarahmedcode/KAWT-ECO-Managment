@@ -38,3 +38,15 @@ The supplied blueprint specifies Prisma and next-pwa; this implementation uses D
 The bundle includes accessible originals (with duplicate copies retained), three retained earlier ZIPs, the implementation source, fresh and historical generated screenshots, this review, validation results and a SHA-256 manifest. A local-only CodeM installation diff is preserved separately; it is not added as an application runtime dependency. Credentials, private environment files, `.local` account/auth stores, node_modules and build output are excluded.
 
 The byte-identical original inline screenshot and any unshared files from other chats cannot be reconstructed from these filesystem sources; the manifest records these limits. Original bundles are delivered as draft release assets restricted to repository-authorized users, not silently published as public documents.
+
+## Screenshot evidence
+
+These are local production-run captures, not proof of a public hosting deployment. The public images contain only supplied aggregate source data. Staff images use an existing isolated local development login and show no patient/donor identities.
+
+- [Public desktop](screenshots/public-desktop.png)
+- [Public mobile](screenshots/public-mobile.png)
+- [Authenticated staff desktop](screenshots/staff-desktop.png)
+- [Authenticated staff mobile](screenshots/staff-mobile.png)
+- [Missing backend](screenshots/backend-unavailable.png)
+
+GitHub reported one moderate dependency alert during push. Alert detail inspection returned HTTP 403 for the current integration, so its cause/fix has not been verified. The repository owner should review the Security/Dependabot alert before treating the app as production-ready.
