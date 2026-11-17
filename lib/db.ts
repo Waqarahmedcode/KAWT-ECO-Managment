@@ -1,11 +1,12 @@
 import 'server-only';
 import { Pool } from 'pg';
+import { databaseConnectionOptions } from './postgres-connection';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { supabasePublicKey } from './supabase-config';
 const globalPool=globalThis as unknown as {__kawtPool?:Pool};
 export function getPool(){
  if(!process.env.DATABASE_URL)throw new Error('DATABASE_URL not configured');
- return globalPool.__kawtPool ?? (globalPool.__kawtPool=new Pool({connectionString:process.env.DATABASE_URL,max:5}));
+ return globalPool.__kawtPool ?? (globalPool.__kawtPool=new Pool({...databaseConnectionOptions(process.env.DATABASE_URL),max:5}));
 }
 export function getDb(){
  if(!process.env.DATABASE_URL)throw new Error('DATABASE_URL not configured');

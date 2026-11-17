@@ -44,3 +44,13 @@ The backend:check script inspects schema metadata, migration versions, row-level
 For a hosted check, configure the private KAWT_READINESS_DATABASE_URL in Netlify, production context. Paid plans can additionally restrict it to builds with the secrets controller. The current plan requires a standard account-protected private variable with default scopes; its name is never prefixed NEXT_PUBLIC_, so it is not exposed to browsers. This is independent of runtime DATABASE_URL; the check does not enable the staff application. The Netlify build runs it before Next.js. A failed backend check leaves the source preview available; KAWT_READINESS_STRICT=1 makes a standalone check fail for unavailable or incomplete backends. Remove the temporary readiness credential after the check. Rotate the earlier chat-exposed database password before real staff release.
 
 The hosted PostgreSQL endpoint was reachable, but needed the Supabase public database CA for chain validation. The readiness check now trusts the vendor CA only for Supabase hostnames and keeps full certificate/hostname verification enabled. Certificate provenance and SHA-256 are recorded in data/certs/README.md.
+
+## Guarded initialization of the selected project
+
+The initializer is inactive unless KAWT_INITIALIZE_PROJECT_REF explicitly identifies the selected Supabase project. It requires an empty, non-extension application namespace, no migration history or existing storage buckets, and the matching pooler user/project reference. An already initialized migration set is preserved. Partially migrated or unrelated databases are refused.
+
+Initialization applies the twelve committed SQL migrations in order and imports only the six supplied historical and six documented planned camps, in one transaction. It validates 2,912 historical attendees, PKR 2,416,571 expenditure, twelve camp rows, zero live patient/donation/default project records and zero created accounts before commit. Any error rolls back. Public source summaries remain separate from operational patients.
+
+Shared PostgreSQL TLS verification is used by the initializer, readiness check, seed CLI and runtime pool. The public Supabase CA is explicitly packaged in the Netlify function. The initializer and readiness flags are removed after setup; production runtime variables are configured independently.
+
+The isolated initialization test creates and removes its own local database, verifies first import, unchanged repeat, all required schema/RLS/private bucket checks and refusal of the existing local product database. It refuses remote targets.

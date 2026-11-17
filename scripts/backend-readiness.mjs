@@ -1,6 +1,6 @@
 import { Client } from 'pg';
 import { readdirSync, readFileSync } from 'node:fs';
-import { rootCertificates } from 'node:tls';
+import { databaseConnectionOptions } from '../lib/postgres-connection.ts';
 
 // Dedicated build credential; deliberately independent of runtime DATABASE_URL.
 const connectionString = process.env.KAWT_READINESS_DATABASE_URL;
@@ -15,14 +15,7 @@ const versions = files.map(name => name.split('_')[0]);
 const tables = [...new Set(files.flatMap(name => [...readFileSync(new URL(name, migrations), 'utf8').matchAll(/create\s+table\s+public\.(\w+)/gi)].map(match => match[1])))].sort();
 let client;
 try {
-  const target = new URL(connectionString);
-  if (!['postgres:', 'postgresql:'].includes(target.protocol)) throw Object.assign(new Error(), { code: 'INVALID_DATABASE_URL' });
-  const local = ['localhost', '127.0.0.1', '[::1]'].includes(target.hostname);
-  // pg URL SSL options override explicit SSL settings; enforce verified remote TLS.
-  for (const key of ['ssl', 'sslmode', 'sslcert', 'sslkey', 'sslrootcert']) target.searchParams.delete(key);
-  const supabase = target.hostname.endsWith('.supabase.com') || target.hostname.endsWith('.supabase.co');
-  const ssl = local ? false : { rejectUnauthorized: true, ...(supabase ? { ca: [...rootCertificates, readFileSync(new URL('../data/certs/supabase-prod-ca-2021.crt', import.meta.url), 'utf8')] } : {}) };
-  client = new Client({ connectionString: target.toString(), ssl, connectionTimeoutMillis: 15000, query_timeout: 15000 });
+  client = new Client(databaseConnectionOptions(connectionString));
   await client.connect();
   await client.query('BEGIN READ ONLY');
   await client.query("SET LOCAL statement_timeout = '10s'");

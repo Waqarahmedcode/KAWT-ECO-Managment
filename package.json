@@ -17,8 +17,10 @@
     "test:workflows": "node --env-file=.env.local tests/workflows.mjs",
     "integrations:dry-run": "node --env-file-if-exists=.env.local --import tsx scripts/process-integrations.ts",
     "test:preview": "node tests/preview.mjs",
-    "backend:check": "node scripts/backend-readiness.mjs",
-    "build:netlify": "npm run backend:check && npm run build"
+    "backend:check": "node --import tsx scripts/backend-readiness.mjs",
+    "build:netlify": "npm run backend:initialize && npm run backend:check && npm run build",
+    "backend:initialize": "node --import tsx scripts/initialize-database.mjs",
+    "test:initialization": "node tests/initialization.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.6.1",
