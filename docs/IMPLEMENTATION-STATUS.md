@@ -56,4 +56,4 @@ The first five captures below are local production runs; the last three show the
 - [Live Netlify mobile](screenshots/netlify-public-mobile.png)
 - [Live Netlify staff unavailable](screenshots/netlify-staff-unavailable.png)
 
-GitHub reported one moderate dependency alert during push. Alert detail inspection returned HTTP 403 for the current integration, so its cause/fix has not been verified. The repository owner should review the Security/Dependabot alert before treating the app as production-ready.
+The reported dependency issue was identified through npm audit as a development-tool minimatch advisory (GHSA-g3hv-75wg-m249). Compatible transitive updates were applied without package install scripts. npm audit now reports zero vulnerabilities across runtime and development dependencies. GitHub alert status may lag its lockfile rescan.

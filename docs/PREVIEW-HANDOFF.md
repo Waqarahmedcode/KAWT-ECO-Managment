@@ -36,3 +36,9 @@ KAWT_PREVIEW_TEST_URL=http://127.0.0.1:3002 npm run test:preview
 For full local authenticated checks, supply a private existing local development-account path through `KAWT_PREVIEW_ACCOUNTS_PATH`. `KAWT_UNCONFIGURED_TEST_URL` may identify a second loopback server without database configuration. Screenshots/results are written to the ignored `.local/preview-validation` directory. Fixture-producing workflow suites belong on a disposable test database, not a source-only product database.
 
 The download handoff must distinguish committed source, historical ZIPs and uncommitted tool-only changes. Preserve original uploads and a hash/duplicate manifest, include real dated screenshots and review reports, and exclude credentials, `.local`, dependencies, build output and auth stores. Store original-document bundles as owner-accessible draft release assets unless public document publication is explicitly approved.
+
+## Read-only hosted database check
+
+The backend:check script inspects schema metadata, migration versions, row-level-security flags and the private receipt bucket. It never seeds, migrates, resets or reads patient/donor records. Queries run within a PostgreSQL READ ONLY transaction with timeouts and remote TLS certificate verification. Logs contain a sanitized KAWT_BACKEND_READINESS JSON summary, never connection strings or exception messages.
+
+For a hosted check, configure KAWT_READINESS_DATABASE_URL as a secret scoped to Netlify builds, production context. This is independent of runtime DATABASE_URL; the check does not enable the staff application. The Netlify build runs it before Next.js. A failed backend check leaves the source preview available; KAWT_READINESS_STRICT=1 makes a standalone check fail for unavailable or incomplete backends. Remove the temporary readiness credential after the check. Rotate the earlier chat-exposed database password before real staff release.
