@@ -6,6 +6,15 @@
 - `/preview` is a public, read-only view of attached source summaries/plans, independent of staff authentication and database availability.
 - `/dashboard` is the authenticated staff application. If backend variables are missing it shows an explicit unavailable view, never a silent source preview.
 
+## Verified staging deployment
+
+- Public preview: https://kawt-eco-managment-preview.netlify.app/preview
+- Staff route: https://kawt-eco-managment-preview.netlify.app/dashboard (backend unavailable until configured)
+- Site administration: https://app.netlify.com/projects/kawt-eco-managment-preview
+- Repository: `Waqarahmedcode/KAWT-ECO-Managment`, `main`, root directory.
+- Initial verified deploy: `6afc37a626ebe0a88479fe5a`, application revision `79ce2cd`.
+- Desktop/mobile screenshots and verification results are retained in `docs/screenshots` and `docs/NETLIFY-VERIFICATION.json`.
+
 ## Hosting
 
 Use a new Netlify staging site and preserve existing sites. Link the repository root of `Waqarahmedcode/KAWT-ECO-Managment`, branch `main`, Node 24, frozen dependency installation and the committed Netlify Next.js build configuration. A static drag-and-drop upload/GitHub Pages cannot serve these server APIs. This source does not itself prove that a Netlify site has been authorized or deployed; the handoff status must include verified URLs or the precise pending blocker.
