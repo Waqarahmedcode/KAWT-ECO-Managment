@@ -3,7 +3,7 @@ alter type public.app_role add value if not exists 'csr_partner';
 alter table public.camp_patients add column is_emergency boolean not null default false;
 alter table public.profiles add column email text;
 update public.profiles p set email=u.email from auth.users u where p.id=u.id;
-create or replace function public.create_user_profile() returns trigger language plpgsql security definer set search_path='' as $$
+create or replace function public.kawt_create_user_profile() returns trigger language plpgsql security definer set search_path='' as $$
 begin insert into public.profiles(id,role,email,display_name) values(new.id,'donor',new.email,new.raw_user_meta_data->>'full_name') on conflict(id) do nothing;return new;end;$$;
 alter table public.camp_patients add column client_request_id uuid;
 create unique index patient_intake_idempotency on public.camp_patients(created_by,client_request_id) where client_request_id is not null;

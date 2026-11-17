@@ -19,3 +19,15 @@ create policy receipt_private_insert on storage.objects for insert to authentica
  with check(bucket_id='private-camp-receipts' and public.has_role(array['admin']::public.app_role[]));
 create policy receipt_private_select on storage.objects for select to authenticated
  using(bucket_id='private-camp-receipts' and public.has_role(array['admin','camp_manager']::public.app_role[]));
+
+-- Restrictive rules keep KAWT receipts private even alongside broader existing policies.
+create policy kawt_receipt_objects_anonymous on storage.objects as restrictive for all to anon using (bucket_id<>'private-camp-receipts') with check (bucket_id<>'private-camp-receipts');
+create policy kawt_receipt_objects_read on storage.objects as restrictive for select to authenticated using (bucket_id<>'private-camp-receipts' or public.has_role(array['admin','camp_manager']::public.app_role[]));
+create policy kawt_receipt_objects_insert on storage.objects as restrictive for insert to authenticated with check (bucket_id<>'private-camp-receipts' or public.has_role(array['admin']::public.app_role[]));
+create policy kawt_receipt_objects_update on storage.objects as restrictive for update to authenticated using (bucket_id<>'private-camp-receipts' or public.has_role(array['admin']::public.app_role[])) with check (bucket_id<>'private-camp-receipts' or public.has_role(array['admin']::public.app_role[]));
+create policy kawt_receipt_objects_delete on storage.objects as restrictive for delete to authenticated using (bucket_id<>'private-camp-receipts' or public.has_role(array['admin']::public.app_role[]));
+create policy kawt_receipt_buckets_anonymous on storage.buckets as restrictive for all to anon using (id<>'private-camp-receipts') with check (id<>'private-camp-receipts');
+create policy kawt_receipt_buckets_read on storage.buckets as restrictive for select to authenticated using (id<>'private-camp-receipts' or public.has_role(array['admin','camp_manager']::public.app_role[]));
+create policy kawt_receipt_buckets_insert on storage.buckets as restrictive for insert to authenticated with check (id<>'private-camp-receipts' or (public.has_role(array['admin']::public.app_role[]) and public=false));
+create policy kawt_receipt_buckets_update on storage.buckets as restrictive for update to authenticated using (id<>'private-camp-receipts' or public.has_role(array['admin']::public.app_role[])) with check (id<>'private-camp-receipts' or (public.has_role(array['admin']::public.app_role[]) and public=false));
+create policy kawt_receipt_buckets_delete on storage.buckets as restrictive for delete to authenticated using (id<>'private-camp-receipts' or public.has_role(array['admin']::public.app_role[]));

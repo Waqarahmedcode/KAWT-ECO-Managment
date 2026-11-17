@@ -12,9 +12,9 @@ create table public.profiles (
  role public.app_role not null default 'donor', display_name text,
  created_at timestamptz not null default now()
 );
-create function public.create_user_profile() returns trigger language plpgsql security definer set search_path='' as $$
+create function public.kawt_create_user_profile() returns trigger language plpgsql security definer set search_path='' as $$
 begin insert into public.profiles(id,role) values(new.id,'donor') on conflict(id) do nothing;return new;end;$$;
-create trigger on_auth_user_created after insert on auth.users for each row execute procedure public.create_user_profile();
+create trigger kawt_on_auth_user_created after insert on auth.users for each row execute procedure public.kawt_create_user_profile();
 -- SECURITY: authenticate against auth.users, never editable user_metadata.
 create function public.has_role(required public.app_role[]) returns boolean
 language sql stable security definer set search_path='' as $$

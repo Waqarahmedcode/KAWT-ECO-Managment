@@ -21,15 +21,26 @@ try {
  const versions = files.map(name=>name.split('_')[0]);
  const hasHistory = Boolean((await client.query("select to_regclass('supabase_migrations.schema_migrations') as value")).rows[0].value);
  const history = hasHistory ? (await client.query('select version from supabase_migrations.schema_migrations')).rows.map(x=>x.version) : [];
- if (history.length===versions.length && versions.every(v=>history.includes(v))) {
+ if (versions.every(v=>history.includes(v))) {
   await client.query('ROLLBACK');emit({status:'already_initialized',databaseChanged:false});process.exitCode=0;
  } else {
-  // Refuse partially migrated or unrelated application databases. Never reset/overwrite.
-  const relations=(await client.query("select count(*)::int as count from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname='public' and c.relkind in ('r','p','v','m','f') and not exists(select 1 from pg_depend d where d.classid='pg_class'::regclass and d.objid=c.oid and d.deptype='e')")).rows[0].count;
-  const functions=(await client.query("select count(*)::int as count from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public' and not exists(select 1 from pg_depend d where d.classid='pg_proc'::regclass and d.objid=p.oid and d.deptype='e')")).rows[0].count;
-  const types=(await client.query("select count(*)::int as count from pg_type t join pg_namespace n on n.oid=t.typnamespace where n.nspname='public' and t.typtype in ('e','d') and not exists(select 1 from pg_depend d where d.classid='pg_type'::regclass and d.objid=t.oid and d.deptype='e')")).rows[0].count;
-  const buckets=(await client.query('select count(*)::int as count from storage.buckets')).rows[0].count;
-  if (relations || functions || types || history.length || buckets) throw Object.assign(new Error(),{code:'NONEMPTY_PROJECT_REQUIRES_REVIEW'});
+  // Preserve unrelated project objects. Refuse every KAWT namespace collision.
+  const sqlFiles=files.map(file=>readFileSync(new URL(file,dir),'utf8'));
+  const requiredTables=[...new Set(sqlFiles.flatMap(sql=>[...sql.matchAll(/create\s+table\s+public\.(\w+)/gi)].map(m=>m[1])))];
+  const requiredFunctions=[...new Set(sqlFiles.flatMap(sql=>[...sql.matchAll(/create\s+(?:or\s+replace\s+)?function\s+public\.(\w+)/gi)].map(m=>m[1])))];
+  const requiredTypes=[...new Set(sqlFiles.flatMap(sql=>[...sql.matchAll(/create\s+type\s+public\.(\w+)/gi)].map(m=>m[1])))];
+  const tableCollisions=(await client.query("select c.relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname='public' and c.relname=any($1::text[])",[requiredTables])).rows.map(x=>x.relname);
+  const functionCollisions=(await client.query("select distinct p.proname from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public' and p.proname=any($1::text[])",[requiredFunctions])).rows.map(x=>x.proname);
+  const typeCollisions=(await client.query("select t.typname from pg_type t join pg_namespace n on n.oid=t.typnamespace where n.nspname='public' and t.typname=any($1::text[])",[requiredTypes])).rows.map(x=>x.typname);
+  const triggerCollision=(await client.query("select 1 from pg_trigger where tgrelid='auth.users'::regclass and tgname='kawt_on_auth_user_created'")).rowCount;
+  const storagePolicies=[...new Set(sqlFiles.flatMap(sql=>[...sql.matchAll(/create\s+policy\s+(\w+)\s+on\s+storage\./gi)].map(m=>m[1])))];
+  const policyCollision=(await client.query("select 1 from pg_policies where schemaname='storage' and policyname=any($1::text[])",[storagePolicies])).rowCount;
+  const bucketCollision=(await client.query("select 1 from storage.buckets where id='private-camp-receipts'")).rowCount;
+  const migrationCollisions=history.filter(version=>versions.includes(version));
+  if(tableCollisions.length||functionCollisions.length||typeCollisions.length||triggerCollision||policyCollision||bucketCollision||migrationCollisions.length){
+   emit({status:'conflicts',tables:tableCollisions,functions:functionCollisions,types:typeCollisions,authTrigger:Boolean(triggerCollision),storagePolicies:Boolean(policyCollision),receiptBucket:Boolean(bucketCollision),migrationVersions:migrationCollisions,databaseChanged:false});
+   throw Object.assign(new Error(),{code:'KAWT_OBJECT_COLLISION_REQUIRES_REVIEW'});
+  }
   await client.query('create schema if not exists supabase_migrations');
   await client.query('create table if not exists supabase_migrations.schema_migrations(version text primary key,statements text[],name text)');
   for (const file of files) {
