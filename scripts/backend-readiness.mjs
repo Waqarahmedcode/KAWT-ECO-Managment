@@ -1,5 +1,6 @@
 import { Client } from 'pg';
 import { readdirSync, readFileSync } from 'node:fs';
+import { rootCertificates } from 'node:tls';
 
 // Dedicated build credential; deliberately independent of runtime DATABASE_URL.
 const connectionString = process.env.KAWT_READINESS_DATABASE_URL;
@@ -19,7 +20,9 @@ try {
   const local = ['localhost', '127.0.0.1', '[::1]'].includes(target.hostname);
   // pg URL SSL options override explicit SSL settings; enforce verified remote TLS.
   for (const key of ['ssl', 'sslmode', 'sslcert', 'sslkey', 'sslrootcert']) target.searchParams.delete(key);
-  client = new Client({ connectionString: target.toString(), ssl: local ? false : { rejectUnauthorized: true }, connectionTimeoutMillis: 15000, query_timeout: 15000 });
+  const supabase = target.hostname.endsWith('.supabase.com') || target.hostname.endsWith('.supabase.co');
+  const ssl = local ? false : { rejectUnauthorized: true, ...(supabase ? { ca: [...rootCertificates, readFileSync(new URL('../data/certs/supabase-prod-ca-2021.crt', import.meta.url), 'utf8')] } : {}) };
+  client = new Client({ connectionString: target.toString(), ssl, connectionTimeoutMillis: 15000, query_timeout: 15000 });
   await client.connect();
   await client.query('BEGIN READ ONLY');
   await client.query("SET LOCAL statement_timeout = '10s'");
