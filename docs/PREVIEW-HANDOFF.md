@@ -9,7 +9,7 @@
 ## Verified staging deployment
 
 - Public preview: https://kawt-eco-managment-preview.netlify.app/preview
-- Staff route: https://kawt-eco-managment-preview.netlify.app/dashboard (backend unavailable until configured)
+- Staff route: https://kawt-eco-managment-preview.netlify.app/dashboard (authenticated; anonymous users reach /login)
 - Site administration: https://app.netlify.com/projects/kawt-eco-managment-preview
 - Repository: `Waqarahmedcode/KAWT-ECO-Managment`, `main`, root directory.
 - Initial verified deploy: `6afc37a626ebe0a88479fe5a`, application revision `79ce2cd`.
@@ -58,3 +58,11 @@ The isolated initialization test creates and removes its own local database, ver
 The selected remote project contained unrelated objects, so the initial whole-namespace guard stopped without writes. Initialization now checks every KAWT table/function/type/trigger/storage-policy/migration name specifically; unrelated objects remain untouched. The isolated test proves that an existing unrelated table and row survive initialization and repeat runs.
 \nAuthentication provisioning uses KAWT-prefixed trigger/function names so existing unrelated account hooks remain intact. Other migration-history entries are retained, and repeat setup recognizes the KAWT versions as a subset of that history. The isolated test covers retained unrelated rows, migration versions and authentication hooks.\n
 Coexisting storage policies are constrained with KAWT-bucket-only restrictive rules: anonymous/donor receipt access is blocked, managers read and administrators write, and the receipt bucket cannot be changed to public. Unrelated buckets retain their existing access rules. The disposable validation covers these behaviors even with deliberately broad pre-existing policies.
+
+## First real administrator
+
+KAWT_FIRST_ADMIN_EMAIL is a private server variable chosen by the owner. The build may activate an existing verified account; otherwise a verified sign-in or confirmation callback activates that same account. This never creates an authentication account, invents a password, sends an operator email, or grants roles from user-editable metadata. Verification must come from the database's email challenge or a trusted identity for the exact configured email.
+
+The first grant is serialized and audited. Existing administrators or an existing bootstrap marker close automatic activation, including after revocation. Remove the private bootstrap setting after administrator activation if desired.
+
+For email links, set the Supabase Auth Site URL to the canonical HTTPS site and add its /auth/callback redirect. Passwords and provider keys belong in private settings or the account holder's browser.

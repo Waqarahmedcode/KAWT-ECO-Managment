@@ -18,9 +18,10 @@
     "integrations:dry-run": "node --env-file-if-exists=.env.local --import tsx scripts/process-integrations.ts",
     "test:preview": "node tests/preview.mjs",
     "backend:check": "node --import tsx scripts/backend-readiness.mjs",
-    "build:netlify": "npm run backend:initialize && npm run backend:check && npm run build",
+    "build:netlify": "npm run backend:initialize && npm run backend:bootstrap-admin && npm run backend:check && npm run build",
     "backend:initialize": "node --import tsx scripts/initialize-database.mjs",
-    "test:initialization": "node tests/initialization.mjs"
+    "test:initialization": "node tests/initialization.mjs",
+    "backend:bootstrap-admin": "node --conditions=react-server --import tsx scripts/bootstrap-first-admin.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.6.1",
@@ -35,6 +36,7 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "recharts": "^2.15.0",
+    "server-only": "^0.0.1",
     "stripe": "^17.5.0",
     "zod": "^4.6.7"
   },

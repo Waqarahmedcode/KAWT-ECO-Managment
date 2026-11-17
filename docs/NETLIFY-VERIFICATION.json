@@ -1,9 +1,21 @@
 {
-  "url": "https://kawt-eco-managment-preview.netlify.app",
-  "status": 200,
+  "recordedAt": "2026-11-17T13:17:24.671Z",
+  "deployId": "6afc52dbea7b9ec756354743",
+  "sourceCommit": "8446846096ca0481c0ce560f6bab045a193104a6",
+  "publicPreview": "https://kawt-eco-managment-preview.netlify.app/preview",
+  "staffLogin": "https://kawt-eco-managment-preview.netlify.app/login",
+  "runtimeDatabaseRead": 200,
+  "anonymousWorkspace": 401,
+  "supabaseAuthHealth": 200,
+  "publicGivingCounts": {
+    "projects": 0,
+    "camps": 0,
+    "banks": 0,
+    "reports": 0
+  },
   "sourceTotalsVerified": true,
-  "staffBackend": "unavailable",
   "mobileOverflow": false,
   "browserErrors": [],
-  "recordedAt": "2026-11-17T11:19:09.566Z"
+  "businessRecordsCreatedByVerification": 0,
+  "staffAccountTested": false
 }
