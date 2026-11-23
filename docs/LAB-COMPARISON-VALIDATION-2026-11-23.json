@@ -10,5 +10,8 @@
   "newDatabaseMigrations": 0,
   "liveBusinessRecordsImported": 0,
   "ownerConfirmation": "pending, confirmed by user",
-  "credentialsIncluded": false
+  "credentialsIncluded": false,
+  "liveDeployment": "verified",
+  "applicationCommit": "38e4c603f65d3a6e972c815427ff9b8bd28867b9",
+  "deployId": "6b041fafa1e3ff15b91182b2"
 }

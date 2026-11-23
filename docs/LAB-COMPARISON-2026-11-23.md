@@ -1,5 +1,9 @@
 # Lab period comparison — 23 November 2026
 
+**Live verified: 23 November 2026, 04:14 PM PKT.** [Private Lab reports](https://kawt-eco-managment-preview.netlify.app/lab/reports) par owner/staff login ke baad comparison available hai. [Owner signup/sign-in](https://kawt-eco-managment-preview.netlify.app/login).
+
+Deployed application commit `38e4c603f65d3a6e972c815427ff9b8bd28867b9`; deployment `6b041fafa1e3ff15b91182b2`. GitHub main contains the verified code. Live comparison API anonymous requests ko deny karti hai; database-backed public API aur protected redirects verify huay. Is release mein koi nayi migration ya business-record import nahin hua. [Live verification](LAB-COMPARISON-LIVE-2026-11-23.json).
+
 Lab reports mein previous period, previous-year exact dates aur manual comparison range add hui. Overall reported tests/patient counts, Morning/Evening/Night aur test-wise counts ke tables current, previous, absolute change aur source-backed percent dikhate hain. Print/PDF, CSV aur Excel mein comparison available hai.
 
 Missing source ko zero nahin maana jata. Partial source/count coverage, overlapping windows, incompatible period lengths aur badli hui overall test lists par growth suppress hoti hai. Matched individual tests alag compare ho sakte hain. Prior explicit zero aur new activity par percentage undefined rehta hai; dono explicit zero par zero change valid hai. Lab scopes mix nahin hote. Patient counts unique people ya clinical-quality score nahin.

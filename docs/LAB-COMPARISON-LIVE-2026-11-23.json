@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-23",
+  "site": "https://kawt-eco-managment-preview.netlify.app",
+  "sourceCommit": "38e4c603f65d3a6e972c815427ff9b8bd28867b9",
+  "deployId": "6b041fafa1e3ff15b91182b2",
+  "publishedAt": "2026-11-23T11:14:08.452Z",
+  "canonicalDeployVerified": true,
+  "productionBuildPassed": true,
+  "routes": [
+    {
+      "route": "/preview",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "route": "/login",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "route": "/lab/login",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "route": "/lab/reports",
+      "status": 307,
+      "passed": true
+    },
+    {
+      "route": "/api/lab/comparison?kind=month&start=2026-07-01&end=2026-07-31",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "route": "/api/lab/reports",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "route": "/api/giving",
+      "status": 200,
+      "passed": true
+    }
+  ],
+  "cloudMarkers": {
+    "available": true,
+    "markers": [
+      "KAWT_DATABASE_INITIALIZATION {\"status\":\"already_initialized\",\"databaseChanged\":false}",
+      "KAWT_LAB_INITIALIZATION {\"status\":\"already_initialized\",\"databaseChanged\":false}",
+      "KAWT_FIRST_ADMIN {\"status\":\"account_required\"}",
+      "KAWT_BACKEND_READINESS {\"status\":\"schema_ready\",\"connected\":true,\"readOnly\":true,\"missingTables\":[],\"tablesWithoutRls\":[],\"missingMigrations\":[],\"privateReceiptBucket\":true,\"databaseChanged\":false}"
+    ]
+  },
+  "unitTestsPassed": 44,
+  "isolatedProductionBrowserApiChecks": "passed",
+  "excelIndependentReadAndReimport": "passed",
+  "ownerConfirmation": "pending per user",
+  "liveBusinessRecordsImported": 0,
+  "newMigrationsRequired": 0,
+  "credentialsIncluded": false
+}
