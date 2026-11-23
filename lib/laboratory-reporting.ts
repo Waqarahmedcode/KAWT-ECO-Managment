@@ -60,12 +60,14 @@ export function summarizeLabReports(input: LabReport[], query: LabSummaryQuery) 
  payload.tests = [...tests.values()];
  payload.notes = 'Calculated from ' + selected.length + ' non-overlapping source reports. Monthly/yearly values were not split into daily entries. Main, outsource and emergency referral counts remain separate. Source-covered period does not prove independently observed daily detail.';
  const testCoverage = payload.tests.map(row => {
-  const complete = !uncovered.length && selected.every(report => {
+  const shifts = Object.fromEntries(labShifts.map(shift => [shift, !uncovered.length && selected.every(report => {
    const match = report.payload.tests.find(t => t.label.trim().toLocaleLowerCase('en') === row.label.trim().toLocaleLowerCase('en'));
-   return match && labShifts.every(s => match[s] !== null);
-  });
-  return { label: row.label, complete, verified_zero: complete && labShifts.every(s => row[s] === 0) };
+   return match !== undefined && match[shift] !== null;
+  })])) as Record<typeof labShifts[number], boolean>;
+  const complete = labShifts.every(shift => shifts[shift]);
+  return { label: row.label, complete, shifts, verified_zero: complete && labShifts.every(s => row[s] === 0) };
  });
+ const patientCoverage = Object.fromEntries(labShifts.map(shift => [shift, !uncovered.length && selected.every(report => report.payload.patients[shift] !== null)])) as Record<typeof labShifts[number], boolean>;
  const stats = labTotals(payload);
  return {
   query, found: true as const, payload, stats,
@@ -75,7 +77,7 @@ export function summarizeLabReports(input: LabReport[], query: LabSummaryQuery) 
   missing_dates: uncovered, actual_daily_dates: reports.filter(r => r.period_kind === 'day').map(r => r.period_start),
   selected_daily_dates: selected.filter(r => r.period_kind === 'day').map(r => r.period_start),
   overlapping_detail_sources: reports.filter(r => !selected.some(s => s.id === r.id)).map(r => ({ kind: r.period_kind, start: r.period_start, end: r.period_end })),
-  test_coverage: testCoverage, verified_zero_tests: testCoverage.filter(t => t.verified_zero).map(t => t.label),
+  test_coverage: testCoverage, patient_coverage: patientCoverage, verified_zero_tests: testCoverage.filter(t => t.verified_zero).map(t => t.label),
  };
 }
 export type LabSummary = ReturnType<typeof summarizeLabReports> & { related_aggregate?: { period_kind: string; period_start: string; period_end: string } };

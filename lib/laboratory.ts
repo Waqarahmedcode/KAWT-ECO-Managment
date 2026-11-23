@@ -66,5 +66,5 @@ export function labTotals(payload: LabPayload) {
 }
 export function csvValue(value: string | number) {
  const text = String(value);
- return '"' + (/^[=+\-@\t\r]/.test(text) ? "'" + text : text).replaceAll('"', '""') + '"';
+ return '"' + (typeof value === 'string' && /^[=+\-@\t\r]/.test(text) ? "'" + text : text).replaceAll('"', '""') + '"';
 }

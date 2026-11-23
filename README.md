@@ -2,6 +2,8 @@
 
 # KAWT shared web workspace
 
+[Lab period comparison aur verified checks](docs/LAB-COMPARISON-2026-11-23.md).
+
 Current development checkpoint: **20 November 2026**. Next.js operations, private departmental entry and a public donor portal use Supabase PostgreSQL/Auth. [Current implementation, checks, remaining work and deployment steps](docs/LAB-IMPLEMENTATION-2026-11-20.md).
 
 November 17 ka staging baseline https://kawt-eco-managment-preview.netlify.app/preview par hosted hai. Is source mein naye private Lab aur Medical Centre modules hain; un ka naya hosted deployment abhi nahin hua.
