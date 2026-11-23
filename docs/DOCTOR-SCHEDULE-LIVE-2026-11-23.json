@@ -1,0 +1,92 @@
+{
+  "date": "2026-11-23",
+  "site": "https://kawt-eco-managment-preview.netlify.app",
+  "sourceCommit": "3420ea0416702a594366ca485aee3bea7b4f53b9",
+  "deployId": "6b043b62d188ea487e995b92",
+  "publishedAt": "2026-11-23T13:12:16.753Z",
+  "canonicalDeployVerified": true,
+  "productionBuildPassed": true,
+  "routes": [
+    {
+      "route": "/preview",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "route": "/login",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "route": "/lab/login",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "route": "/lab/reports",
+      "status": 307,
+      "passed": true
+    },
+    {
+      "route": "/medical-centre",
+      "status": 307,
+      "passed": true
+    },
+    {
+      "route": "/api/medical-centre",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "route": "/api/lab/comparison?kind=month&start=2026-07-01&end=2026-07-31",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "route": "/api/lab/reports",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "route": "/api/giving",
+      "status": 200,
+      "passed": true
+    }
+  ],
+  "cloudMarkers": {
+    "available": true,
+    "markers": [
+      "KAWT_DATABASE_INITIALIZATION {\"status\":\"already_initialized\",\"databaseChanged\":false}",
+      "KAWT_LAB_INITIALIZATION {\"status\":\"already_initialized\",\"databaseChanged\":false}",
+      "KAWT_FIRST_ADMIN {\"status\":\"already_bootstrapped\"}",
+      "KAWT_DOCTOR_SCHEDULE {\"status\":\"imported\",\"created\":15,\"liveRatesCreated\":0,\"sourceGroups\":[{\"service_group\":\"OPD\",\"count\":11},{\"service_group\":\"URGENT_CARE\",\"count\":4}],\"verifiedOwner\":true,\"databaseChanged\":true,\"ratesApplied\":false,\"billingEnabled\":false}",
+      "KAWT_BACKEND_READINESS {\"status\":\"schema_ready\",\"connected\":true,\"readOnly\":true,\"missingTables\":[],\"tablesWithoutRls\":[],\"missingMigrations\":[],\"privateReceiptBucket\":true,\"databaseChanged\":false}"
+    ]
+  },
+  "unitTestsPassed": 44,
+  "isolatedProductionBrowserApiChecks": "passed",
+  "ownerVerified": true,
+  "doctorScheduleImport": {
+    "status": "imported",
+    "created": 15,
+    "liveRatesCreated": 0,
+    "sourceGroups": [
+      {
+        "service_group": "OPD",
+        "count": 11
+      },
+      {
+        "service_group": "URGENT_CARE",
+        "count": 4
+      }
+    ],
+    "verifiedOwner": true,
+    "databaseChanged": true,
+    "ratesApplied": false,
+    "billingEnabled": false
+  },
+  "newMigrationsRequired": 0,
+  "automaticBilling": false,
+  "patientWiseLabForm": "next development step; existing Lab editor remains aggregate reports",
+  "credentialsIncluded": false
+}
