@@ -1,3 +1,7 @@
+# November 20 development checkpoint
+
+[New Lab/Medical Centre implementation, verified local behavior and remaining deployment](LAB-IMPLEMENTATION-2026-11-20.md). New modules are not deployed yet. The hosted evidence and release details below describe the November 17 baseline.
+
 # KAWT implementation status
 
 The Netlify application is connected to the selected remote Supabase project. This is a development/staging release; advanced roadmap features and live provider integrations remain separate.

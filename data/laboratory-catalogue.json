@@ -1,0 +1,342 @@
+[
+  {
+    "category": "HEMATOLOGY",
+    "label": "PT (PROTHROMBIN TIME)"
+  },
+  {
+    "category": "HEMATOLOGY",
+    "label": "APTT (Activated Partial Thromboplastin Time)"
+  },
+  {
+    "category": "HEMATOLOGY",
+    "label": "Blood Group"
+  },
+  {
+    "category": "HEMATOLOGY",
+    "label": "CBC"
+  },
+  {
+    "category": "HEMATOLOGY",
+    "label": "CBC ESR"
+  },
+  {
+    "category": "HEMATOLOGY",
+    "label": "ESR (Erythrocyte Sedimentation Rate)"
+  },
+  {
+    "category": "HEMATOLOGY",
+    "label": "MP ICT"
+  },
+  {
+    "category": "BIOCHEMISTRY",
+    "label": "Albumin"
+  },
+  {
+    "category": "BIOCHEMISTRY",
+    "label": "Alakaline Phosphatase"
+  },
+  {
+    "category": "BIOCHEMISTRY",
+    "label": "Amylase"
+  },
+  {
+    "category": "BIOCHEMISTRY",
+    "label": "Calcium"
+  },
+  {
+    "category": "BIOCHEMISTRY",
+    "label": "Cholesterol"
+  },
+  {
+    "category": "BIOCHEMISTRY",
+    "label": "Creatinine"
+  },
+  {
+    "category": "BIOCHEMISTRY",
+    "label": "Electrolytes"
+  },
+  {
+    "category": "BIOCHEMISTRY",
+    "label": "Glucose Fasting"
+  },
+  {
+    "category": "BIOCHEMISTRY",
+    "label": "Glucose Random"
+  },
+  {
+    "category": "BIOCHEMISTRY",
+    "label": "LDH (Lactate Dehydrogenase)"
+  },
+  {
+    "category": "BIOCHEMISTRY",
+    "label": "Phosphorus"
+  },
+  {
+    "category": "BIOCHEMISTRY",
+    "label": "Potassium"
+  },
+  {
+    "category": "BIOCHEMISTRY",
+    "label": "Protein A/G Ratio"
+  },
+  {
+    "category": "BIOCHEMISTRY",
+    "label": "Bilirubin Total/Direct"
+  },
+  {
+    "category": "BIOCHEMISTRY",
+    "label": "SGOT (AST)"
+  },
+  {
+    "category": "BIOCHEMISTRY",
+    "label": "SGPT (ALT)"
+  },
+  {
+    "category": "BIOCHEMISTRY",
+    "label": "TIBC (Total Iron-Binding Capacity)"
+  },
+  {
+    "category": "BIOCHEMISTRY",
+    "label": "Triglyceride"
+  },
+  {
+    "category": "BIOCHEMISTRY",
+    "label": "Urea"
+  },
+  {
+    "category": "BIOCHEMISTRY",
+    "label": "Uric Acid"
+  },
+  {
+    "category": "BIOCHEMISTRY",
+    "label": "Urine for Microalbumin"
+  },
+  {
+    "category": "SPECIAL CHEMISTRY",
+    "label": "Anti CCP (Anti-Cyclic Citrullinated Peptide Antibodies)"
+  },
+  {
+    "category": "SPECIAL CHEMISTRY",
+    "label": "Anti HCV"
+  },
+  {
+    "category": "SPECIAL CHEMISTRY",
+    "label": "Beta HCG (ELISA)"
+  },
+  {
+    "category": "SPECIAL CHEMISTRY",
+    "label": "FSH (follicle-stimulating hormone)"
+  },
+  {
+    "category": "SPECIAL CHEMISTRY",
+    "label": "fT3 (free triiodothyronine)"
+  },
+  {
+    "category": "SPECIAL CHEMISTRY",
+    "label": "fT4 (Free Thyroxine)"
+  },
+  {
+    "category": "SPECIAL CHEMISTRY",
+    "label": "Helicobacter Pylori Antibody (ELISA)"
+  },
+  {
+    "category": "SPECIAL CHEMISTRY",
+    "label": "HbA1c"
+  },
+  {
+    "category": "SPECIAL CHEMISTRY",
+    "label": "HBsAg (ICT)"
+  },
+  {
+    "category": "SPECIAL CHEMISTRY",
+    "label": "IgE"
+  },
+  {
+    "category": "SPECIAL CHEMISTRY",
+    "label": "Fasting Insulin Level"
+  },
+  {
+    "category": "SPECIAL CHEMISTRY",
+    "label": "Serum Iron"
+  },
+  {
+    "category": "SPECIAL CHEMISTRY",
+    "label": "Progesterone"
+  },
+  {
+    "category": "SPECIAL CHEMISTRY",
+    "label": "Prolactin"
+  },
+  {
+    "category": "SPECIAL CHEMISTRY",
+    "label": "Rubella IgG"
+  },
+  {
+    "category": "SPECIAL CHEMISTRY",
+    "label": "T3 (Triiodothyronine)"
+  },
+  {
+    "category": "SPECIAL CHEMISTRY",
+    "label": "T4 (Thyroxine)"
+  },
+  {
+    "category": "SPECIAL CHEMISTRY",
+    "label": "TSH (Thyroid Stimulating Hormone)"
+  },
+  {
+    "category": "SPECIAL CHEMISTRY",
+    "label": "Testosterone"
+  },
+  {
+    "category": "SPECIAL CHEMISTRY",
+    "label": "Vit B12"
+  },
+  {
+    "category": "SPECIAL CHEMISTRY",
+    "label": "Vit D3"
+  },
+  {
+    "category": "PARASITOLOGY",
+    "label": "Stool D/R"
+  },
+  {
+    "category": "PARASITOLOGY",
+    "label": "Stool for H.Pylori Antigen"
+  },
+  {
+    "category": "PARASITOLOGY",
+    "label": "Stool for Occult Blood"
+  },
+  {
+    "category": "PARASITOLOGY",
+    "label": "Stool for Reducing Sugar"
+  },
+  {
+    "category": "PARASITOLOGY",
+    "label": "Urine D/R"
+  },
+  {
+    "category": "SEROLOGY",
+    "label": "ASOT (Antistreptolysin O Titer)"
+  },
+  {
+    "category": "SEROLOGY",
+    "label": "C-Reactive Protein (CRP)"
+  },
+  {
+    "category": "SEROLOGY",
+    "label": "Dengue Antigen NS1"
+  },
+  {
+    "category": "SEROLOGY",
+    "label": "Dengue IgM, IgG"
+  },
+  {
+    "category": "SEROLOGY",
+    "label": "Urine Pregnancy Test"
+  },
+  {
+    "category": "SEROLOGY",
+    "label": "RA Factor With Titer"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (Ascitic Fluid)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (Blood)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (CSF)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (Cystic Fluid)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (Fluid)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (HVS)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (IUD)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (Left Eye)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (Liver Abscess)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (Lt. Ear Swab)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (Pericardial Fluid)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (Pleural Fluid)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (Pus)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (Right Eye)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (Rt. Ear Swab)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (Semen)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (Sputum)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (Stool)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (Synovial Fluid)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (Throat Swab)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (Tracheal aspirate)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (Urethral Swab)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (Urine)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity (Wound Swab)"
+  },
+  {
+    "category": "MICROBIOLOGY",
+    "label": "Culture & Sensitivity - Bone Marrow"
+  }
+]

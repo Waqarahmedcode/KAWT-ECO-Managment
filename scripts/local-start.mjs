@@ -1,3 +1,4 @@
+import { prepareLocalMigrations } from './prepare-local-migrations.mjs';
 import { spawnSync } from 'node:child_process';
 import { mkdirSync,writeFileSync,chmodSync } from 'node:fs';
 import { dirname,resolve } from 'node:path';
@@ -19,7 +20,8 @@ if(status.status!==0){save('supabase-status.log',status);throw new Error('Local 
 JSON.parse(status.stdout);writeFileSync('.local/supabase-status.json',status.stdout,{mode:0o600});chmodSync('.local/supabase-status.json',0o600);
 function node(args){const result=spawnSync(process.execPath,args,{stdio:'inherit'});if(result.status!==0)process.exit(result.status??1)}
 node(['--import','tsx','scripts/configure-local.ts']);
-const migration=cli(['db','push','--local','--yes']);save('migration.log',migration);if(migration.status!==0)throw new Error('Local migration failed; inspect .local/migration.log');
+prepareLocalMigrations();
+const migration=cli(['db','push','--local','--yes','--workdir','.local/migration-workdir']);save('migration.log',migration);if(migration.status!==0)throw new Error('Local migration failed; inspect .local/migration.log');
 node(['--env-file=.env.local','--import','tsx','scripts/bootstrap-local.ts']);
 node(['--env-file=.env.local','--import','tsx','db/seed.ts']);
 console.log('Local SQL, authentication and private storage verified. Next: npm run dev -- --hostname 127.0.0.1 --port 3001');

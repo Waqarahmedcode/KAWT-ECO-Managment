@@ -5,6 +5,7 @@ import { requireRole } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import Workspace from '@/components/workspace/Workspace';
 import { allRoles } from '@/lib/actor-db';
+import { requireLabAccess } from '@/lib/laboratory-server';
 export const dynamic = 'force-dynamic';
 
 export default async function DashboardPage({ searchParams }: { searchParams: Promise<{ section?: string }> }) {
@@ -16,6 +17,10 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
  </main>;
  const access = await requireRole(allRoles).catch(() => null);
  if (!access) redirect('/login');
+ if (access.role === 'donor') {
+  const department = await requireLabAccess().catch(() => null);
+  if (department) redirect('/lab');
+ }
  const staff = ['admin', 'camp_manager', 'doctor', 'pharmacist'].includes(access.role);
  return <Workspace role={access.role} initialCamps={staff ? await dashboardRows(true) : []} initialSection={(await searchParams).section ?? 'overview'} />;
 }

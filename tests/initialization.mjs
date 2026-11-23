@@ -63,6 +63,8 @@ try{
  }
  await client.end();client=undefined;
  console.log('PASS: existing broad storage policies cannot expose private KAWT receipts; other bucket access is preserved.');
+ const moduleUpgrade=spawnSync('node',['--import','tsx','scripts/initialize-laboratory.mjs'],{env,encoding:'utf8',timeout:60000});
+ process.stdout.write(moduleUpgrade.stdout);assert.equal(moduleUpgrade.status,0);
  const result=spawnSync('node',['--import','tsx','scripts/backend-readiness.mjs'],{env:{...env,KAWT_READINESS_STRICT:'1'},encoding:'utf8',timeout:30000});
  process.stdout.write(result.stdout);assert.equal(result.status,0);assert(result.stdout.includes('"schema_ready"'));
  const refused=spawnSync('node',['--import','tsx','scripts/initialize-database.mjs'],{env:{...env,KAWT_READINESS_DATABASE_URL:root.toString()},encoding:'utf8',timeout:30000});

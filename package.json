@@ -13,15 +13,16 @@
     "db:seed": "node --env-file-if-exists=.env.local --import tsx db/seed.ts",
     "test:data": "python3 tests/audit_data.py",
     "db:local": "node scripts/local-start.mjs",
-    "test:unit": "node --import tsx --test tests/contracts.test.ts tests/source-preview.test.ts",
+    "test:unit": "node --import tsx --test tests/contracts.test.ts tests/source-preview.test.ts tests/laboratory.test.ts tests/laboratory-reporting.test.ts",
     "test:workflows": "node --env-file=.env.local tests/workflows.mjs",
     "integrations:dry-run": "node --env-file-if-exists=.env.local --import tsx scripts/process-integrations.ts",
     "test:preview": "node tests/preview.mjs",
     "backend:check": "node --import tsx scripts/backend-readiness.mjs",
-    "build:netlify": "npm run backend:initialize && npm run backend:bootstrap-admin && npm run backend:check && npm run build",
+    "build:netlify": "npm run backend:initialize && npm run backend:lab-initialize && npm run backend:bootstrap-admin && npm run backend:check && npm run build",
     "backend:initialize": "node --import tsx scripts/initialize-database.mjs",
     "test:initialization": "node tests/initialization.mjs",
-    "backend:bootstrap-admin": "node --conditions=react-server --import tsx scripts/bootstrap-first-admin.mjs"
+    "backend:bootstrap-admin": "node --conditions=react-server --import tsx scripts/bootstrap-first-admin.mjs",
+    "backend:lab-initialize": "node --import tsx scripts/initialize-laboratory.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.6.1",
@@ -31,13 +32,16 @@
     "lucide-react": "^0.468.0",
     "next": "^16.0.0",
     "pdf-lib": "1.17.1",
+    "pdf-parse": "^2.4.5",
     "pg": "^8.13.0",
     "qrcode": "1.5.4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "read-excel-file": "^9.3.20",
     "recharts": "^2.15.0",
     "server-only": "^0.0.1",
     "stripe": "^17.5.0",
+    "tesseract.js": "^7.0.0",
     "zod": "^4.6.7"
   },
   "devDependencies": {

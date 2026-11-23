@@ -20,4 +20,4 @@ export async function proxy(request:NextRequest){
  response.headers.set('Cache-Control','private, no-store');
  return response;
 }
-export const config={matcher:['/dashboard/:path*','/referrals/:path*','/donations/:path*','/login','/api/workspace','/api/insights','/api/offline/context']};
+export const config={matcher:['/dashboard/:path*','/referrals/:path*','/donations/:path*','/login','/lab/:path*','/api/lab/:path*','/medical-centre/:path*','/api/medical-centre/:path*','/api/workspace','/api/insights','/api/offline/context']};

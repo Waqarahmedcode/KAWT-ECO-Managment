@@ -9,10 +9,10 @@ if (!connectionString) {
   emit({ status: 'not_configured', databaseChanged: false });
   process.exit(process.env.KAWT_READINESS_STRICT === '1' ? 1 : 0);
 }
-const migrations = new URL('../supabase/migrations/', import.meta.url);
-const files = readdirSync(migrations).filter(name => /^\d+_.+\.sql$/.test(name)).sort();
-const versions = files.map(name => name.split('_')[0]);
-const tables = [...new Set(files.flatMap(name => [...readFileSync(new URL(name, migrations), 'utf8').matchAll(/create\s+table\s+public\.(\w+)/gi)].map(match => match[1])))].sort();
+const directories = ['../supabase/migrations/', '../supabase/lab-migrations/'].map(path => new URL(path, import.meta.url));
+const files = directories.flatMap(directory => readdirSync(directory).filter(name => /^\d+_.+\.sql$/.test(name)).sort().map(name => ({ name, url: new URL(name, directory) })));
+const versions = files.map(file => file.name.split('_')[0]);
+const tables = [...new Set(files.flatMap(file => [...readFileSync(file.url, 'utf8').matchAll(/create\s+table\s+public\.(\w+)/gi)].map(match => match[1])))].sort();
 let client;
 try {
   client = new Client(databaseConnectionOptions(connectionString));
