@@ -1,3 +1,5 @@
+> Latest update, 23 November 2026: private patient-wise Lab entry is deployed and verified, alongside the imported 11 OPD / 4 Urgent Care doctor schedule. See [patient-entry release](LAB-PATIENT-ENTRY-2026-11-23.md) and [live verification](LAB-PATIENT-ENTRY-LIVE-2026-11-23.json). Actual shift hours/rates must be configured with their valid-from date; no billing or live test patients were created.
+
 > **23 November 2026: lab/Medical Centre update live hai.** [Verified deployment, URLs aur owner setup](LIVE-DEPLOYMENT-2026-11-23.md). Neeche purane checkpoint ki dates/status historical hain.
 
 # KAWT current execution — 20 November 2026

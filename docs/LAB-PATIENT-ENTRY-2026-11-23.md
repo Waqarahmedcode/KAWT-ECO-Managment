@@ -14,6 +14,10 @@ Reports support today, last seven days, calendar month, half-year, year and cust
 
 The additive migration `202611230019` creates three RLS-protected tables and the scoped aggregate function. It does not seed patients, actual shift hours or prices. The existing project-specific migration/readiness checks run before publishing.
 
-Validation: 50 unit tests, TypeScript, ESLint, optimized production build, isolated SQL/API/browser checks, independent XLSX reopening, mobile layout, correction history, role boundaries, configuration date boundaries and a browser retry after a committed response is lost. Tests use synthetic records in a disposable local database and existing local Auth fixtures; no live test patients or Auth accounts are created. See `LAB-PATIENT-ENTRY-VALIDATION-2026-11-23.json`. Deployment evidence is recorded after publication.
+Validation: 50 unit tests, TypeScript, ESLint, optimized production build, isolated SQL/API/browser checks, independent XLSX reopening, mobile layout, correction history, role boundaries, configuration date boundaries and a browser retry after a committed response is lost. Tests use synthetic records in a disposable local database and existing local Auth fixtures; no live test patients or Auth accounts are created. See `LAB-PATIENT-ENTRY-VALIDATION-2026-11-23.json`. Live deployment is verified in `LAB-PATIENT-ENTRY-LIVE-2026-11-23.json`: the approved database migration created three private tables, readiness passed, the 15 doctor source records remained intact, and protected routes rejected unsigned requests.
+
+Live department entry: https://kawt-eco-managment-preview.netlify.app/lab/visits
+
+Live Medical Centre: https://kawt-eco-managment-preview.netlify.app/medical-centre
 
 Remaining external source work: the private July aggregate sample is not converted into individual patient records and has not been imported by this change. Existing admin PDF/Excel/JSON import remains available through the source report editor. OPD and Urgent Care patient/service registers, consumable records and integration with the separate financial-analysis app remain subsequent work; doctor schedule import is already live.
