@@ -18,10 +18,11 @@
     "integrations:dry-run": "node --env-file-if-exists=.env.local --import tsx scripts/process-integrations.ts",
     "test:preview": "node tests/preview.mjs",
     "backend:check": "node --import tsx scripts/backend-readiness.mjs",
-    "build:netlify": "npm run backend:initialize && npm run backend:lab-initialize && npm run backend:bootstrap-admin && npm run backend:check && npm run build",
+    "build:netlify": "npm run backend:initialize && npm run backend:lab-initialize && npm run backend:bootstrap-admin && npm run backend:doctor-schedule && npm run backend:check && npm run build",
     "backend:initialize": "node --import tsx scripts/initialize-database.mjs",
     "test:initialization": "node tests/initialization.mjs",
     "backend:bootstrap-admin": "node --conditions=react-server --import tsx scripts/bootstrap-first-admin.mjs",
+    "backend:doctor-schedule": "node --import tsx scripts/import-doctor-schedule.mjs",
     "backend:lab-initialize": "node --import tsx scripts/initialize-laboratory.mjs"
   },
   "dependencies": {

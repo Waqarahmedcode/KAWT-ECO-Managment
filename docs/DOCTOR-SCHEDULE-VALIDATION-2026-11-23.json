@@ -1,0 +1,15 @@
+{
+  "checks": [
+    "Unverified/missing owner and other project fail without importing records",
+    "Exactly 11 OPD and 4 Urgent Care source drafts imported with audit; no prices, billing or guessed dates",
+    "Repeat import does not duplicate doctors or overwrite audited staff corrections",
+    "Live route authentication, role limits, duplicate-source conflict and source validation pass locally",
+    "Browser OPD/Urgent tables, reference fees, repeat-import state and mobile layout pass"
+  ],
+  "productionRuntime": true,
+  "source": "Owner-provided public professional schedule, tested in a disposable local database",
+  "liveDatabaseChanged": false,
+  "authAccountsCreated": 0,
+  "sourceDoctors": 15,
+  "automaticBilling": false
+}

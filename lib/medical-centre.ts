@@ -24,3 +24,7 @@ export function karachiDate(now = new Date()) {
  const part = (type: string) => parts.find(p => p.type === type)?.value ?? '';
  return part('year') + '-' + part('month') + '-' + part('day');
 }
+export function sourceQuotedFee(notes: string) {
+ const prefix = 'Source quoted charge: ', end = notes.indexOf('. Effective date not supplied');
+ return notes.startsWith(prefix) && end > prefix.length ? notes.slice(prefix.length, end) : null;
+}
