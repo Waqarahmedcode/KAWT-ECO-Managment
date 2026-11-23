@@ -1,0 +1,116 @@
+{
+  "date": "2026-11-23",
+  "site": "https://kawt-eco-managment-preview.netlify.app",
+  "sourceCommit": "4601d475654c2b376b44ea560a559037d3444e81",
+  "deployId": "6b044718d91b98bca5f3396a",
+  "publishedAt": "2026-11-23T14:01:53.952Z",
+  "canonicalDeployVerified": true,
+  "productionBuildPassed": true,
+  "routes": [
+    {
+      "route": "/preview",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "route": "/login",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "route": "/lab/login",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "route": "/lab/reports",
+      "status": 307,
+      "passed": true
+    },
+    {
+      "route": "/medical-centre",
+      "status": 307,
+      "passed": true
+    },
+    {
+      "route": "/lab/visits",
+      "status": 307,
+      "passed": true
+    },
+    {
+      "route": "/api/lab/entry-settings",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "route": "/api/lab/visits?start=2026-02-01&end=2026-02-01",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "route": "/api/lab/visits/summary?start=2026-02-01&end=2026-02-01",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "route": "/api/medical-centre",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "route": "/api/lab/comparison?kind=month&start=2026-07-01&end=2026-07-31",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "route": "/api/lab/reports",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "route": "/api/giving",
+      "status": 200,
+      "passed": true
+    }
+  ],
+  "cloudMarkers": {
+    "available": true,
+    "markers": [
+      "KAWT_DATABASE_INITIALIZATION {\"status\":\"already_initialized\",\"databaseChanged\":false}",
+      "KAWT_LAB_INITIALIZATION {\"status\":\"already_initialized\",\"databaseChanged\":false}",
+      "KAWT_FIRST_ADMIN {\"status\":\"already_bootstrapped\"}",
+      "KAWT_DOCTOR_SCHEDULE {\"status\":\"already_imported\",\"created\":0,\"liveRatesCreated\":0,\"sourceGroups\":[{\"service_group\":\"OPD\",\"count\":11},{\"service_group\":\"URGENT_CARE\",\"count\":4}],\"verifiedOwner\":true,\"databaseChanged\":false,\"ratesApplied\":false,\"billingEnabled\":false}",
+      "KAWT_BACKEND_READINESS {\"status\":\"schema_ready\",\"connected\":true,\"readOnly\":true,\"missingTables\":[],\"tablesWithoutRls\":[],\"missingMigrations\":[],\"privateReceiptBucket\":true,\"databaseChanged\":false}"
+    ]
+  },
+  "unitTestsPassed": 50,
+  "isolatedProductionBrowserApiChecks": "passed",
+  "ownerVerified": true,
+  "doctorScheduleImport": {
+    "status": "already_imported",
+    "created": 0,
+    "liveRatesCreated": 0,
+    "sourceGroups": [
+      {
+        "service_group": "OPD",
+        "count": 11
+      },
+      {
+        "service_group": "URGENT_CARE",
+        "count": 4
+      }
+    ],
+    "verifiedOwner": true,
+    "databaseChanged": false,
+    "ratesApplied": false,
+    "billingEnabled": false
+  },
+  "newMigrationsRequired": 0,
+  "newPrivateTables": 0,
+  "patientSchemaPreviouslyApplied": true,
+  "liveTestPatientsCreated": 0,
+  "automaticBilling": false,
+  "patientWiseLabForm": "published; requires assigned department access",
+  "shiftHoursAndRates": "actual values not seeded; configure valid-from date or choose shift manually; missing price remains unknown",
+  "credentialsIncluded": false
+}

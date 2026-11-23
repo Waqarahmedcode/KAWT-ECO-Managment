@@ -7,3 +7,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+## KAWT continuity
+
+Read `START-HERE.md` and `docs/NEXT-SESSION-BACKLOG-2026-11-23.md` when resuming this project. Verify the current Git/live state before using older dated status reports. The current reception software retains automatic billing; the Lab portal records entries and performance. Organization-wide data reset was deferred by the user. Keep private credentials and source data outside committed handoff documents.
