@@ -1,3 +1,5 @@
+> **23 November 2026: lab/Medical Centre update live hai.** [Verified deployment, URLs aur owner setup](LIVE-DEPLOYMENT-2026-11-23.md). Neeche purane checkpoint ki dates/status historical hain.
+
 # KAWT current execution — 20 November 2026
 
 Current checkout: `kawt-preview-implementation`, local development branch `codex/kawt-previews`. November 17 ka hosted baseline pehle se Netlify/Supabase par hai. November 20 ke lab reporting aur Medical Centre changes abhi local reviewed working tree mein hain; naya push/deploy claim nahin kiya gaya.

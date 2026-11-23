@@ -1,3 +1,5 @@
+> **23 November 2026: lab/Medical Centre update live hai.** [Verified deployment, URLs aur owner setup](LIVE-DEPLOYMENT-2026-11-23.md). Neeche purane checkpoint ki dates/status historical hain.
+
 # November 20 development checkpoint
 
 [New Lab/Medical Centre implementation, verified local behavior and remaining deployment](LAB-IMPLEMENTATION-2026-11-20.md). New modules are not deployed yet. The hosted evidence and release details below describe the November 17 baseline.

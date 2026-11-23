@@ -1,3 +1,5 @@
+> **23 November 2026: lab/Medical Centre update live hai.** [Verified deployment, URLs aur owner setup](docs/LIVE-DEPLOYMENT-2026-11-23.md). Neeche purane checkpoint ki dates/status historical hain.
+
 # KAWT shared web workspace
 
 Current development checkpoint: **20 November 2026**. Next.js operations, private departmental entry and a public donor portal use Supabase PostgreSQL/Auth. [Current implementation, checks, remaining work and deployment steps](docs/LAB-IMPLEMENTATION-2026-11-20.md).

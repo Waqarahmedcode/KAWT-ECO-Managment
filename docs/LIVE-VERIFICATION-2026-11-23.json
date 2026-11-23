@@ -1,0 +1,84 @@
+{
+  "date": "2026-11-23",
+  "site": "https://kawt-eco-managment-preview.netlify.app",
+  "sourceCommit": "e0271ec57d01ce03dd3864e0c44a61435c37fd4c",
+  "deployId": "6b0413b8672ae9baf922809c",
+  "publishedDeployVerified": true,
+  "routes": [
+    {
+      "route": "/preview",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "route": "/lab/login",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "route": "/lab",
+      "status": 307,
+      "expected": 307,
+      "passed": true
+    },
+    {
+      "route": "/lab/reports",
+      "status": 307,
+      "expected": 307,
+      "passed": true
+    },
+    {
+      "route": "/medical-centre",
+      "status": 307,
+      "expected": 307,
+      "passed": true
+    },
+    {
+      "route": "/api/lab/reports",
+      "status": 401,
+      "expected": 401,
+      "passed": true
+    },
+    {
+      "route": "/api/medical-centre",
+      "status": 401,
+      "expected": 401,
+      "passed": true
+    },
+    {
+      "route": "/api/giving",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    }
+  ],
+  "anonymousTableProtection": [
+    {
+      "table": "kawt_lab_reports",
+      "status": 401,
+      "anonymousReadDenied": true,
+      "schemaRecognized": true
+    },
+    {
+      "table": "kawt_mc_doctors",
+      "status": 401,
+      "anonymousReadDenied": true,
+      "schemaRecognized": true
+    }
+  ],
+  "cloudBuildMarkers": {
+    "logEntriesRead": 213,
+    "markers": [
+      "KAWT_DATABASE_INITIALIZATION {\"status\":\"already_initialized\",\"databaseChanged\":false}",
+      "KAWT_LAB_INITIALIZATION {\"status\":\"initialized\",\"migrations\":6,\"tables\":8,\"accountsCreated\":0,\"businessRecordsCreated\":0,\"databaseChanged\":true}",
+      "KAWT_FIRST_ADMIN {\"status\":\"account_required\"}",
+      "KAWT_BACKEND_READINESS {\"status\":\"schema_ready\",\"connected\":true,\"readOnly\":true,\"missingTables\":[],\"tablesWithoutRls\":[],\"missingMigrations\":[],\"privateReceiptBucket\":true,\"databaseChanged\":false}"
+    ],
+    "available": true
+  },
+  "realStaffSignInTested": false,
+  "businessRecordsCreatedByVerification": 0,
+  "credentialsIncluded": false
+}
