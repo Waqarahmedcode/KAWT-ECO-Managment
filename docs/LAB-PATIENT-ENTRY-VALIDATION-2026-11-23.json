@@ -1,0 +1,15 @@
+{
+  "checks": [
+    "Patient visits counted independently of test quantity; exact Pakistan day, unknown prices and idempotent save preserved",
+    "Configured shifts override incorrect input, midnight stays on its true date, referral/panel subsets and overlapping aggregates never inflate entry totals",
+    "Viewer sees aggregates only; unrelated/partner staff cannot access identities or audit; SQL rejects deletion, configuration writes and invalid quantities",
+    "Corrections retain audit/old shift/rate snapshots; stale revisions fail; cancellation is reversible; concurrent retries create one visit",
+    "Real Excel reopens, includes MOU subsets, excludes patient identities and never invents an empty daily source",
+    "Department login opens simple entry, catalogue/rate selection and automatic time/shift work; edits and lost-response retry preserve counts; viewer/mobile/CSV checks pass"
+  ],
+  "productionRuntime": true,
+  "livePatientRecordsCreated": 0,
+  "authAccountsCreated": 0,
+  "fixtureData": "Synthetic entries in disposable local database only",
+  "automaticBilling": false
+}

@@ -29,7 +29,7 @@ function sheet(rows: Cell[][]) {
  }).join('') + '</row>').join('');
  return '<?xml version="1.0" encoding="UTF-8"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" state="frozen"/></sheetView></sheetViews><cols><col min="1" max="1" width="40" customWidth="1"/><col min="2" max="8" width="23" customWidth="1"/></cols><sheetData>' + content + '</sheetData><pageSetup orientation="landscape" paperSize="9" fitToWidth="1" fitToHeight="0"/></worksheet>';
 }
-export function laboratoryXlsx(report: Omit<Pick<LabReport, 'laboratory_name' | 'period_start' | 'period_end' | 'source_label' | 'payload'>, never> & { period_kind: string; revision: number | string }, comparison?: LabComparison) {
+export function laboratoryXlsx(report: Omit<Pick<LabReport, 'laboratory_name' | 'period_start' | 'period_end' | 'source_label' | 'payload'>, never> & { period_kind: string; revision: number | string }, comparison?: LabComparison, extraReferrals: { label: string; patients: number; tests: number }[] = []) {
  const p = report.payload, sums = labTotals(p);
  const summary: Cell[][] = [['KAWT Medical Centre', 'Laboratory performance'], ['Period kind', report.period_kind], ['Period start', report.period_start], ['Period end', report.period_end], ['Timezone', 'Asia/Karachi'], ['Source', report.source_label], ['Revision', report.revision], ['Laboratory', report.laboratory_name], [], ['Shift', 'Reported patients', 'Reported tests', 'Coverage']];
  for (const s of labShifts) summary.push([s, p.patients[s], sums.observed[s] ? sums.tests[s] : null, p.tests.every(t => t[s] !== null) && p.patients[s] !== null ? 'Reported rows complete' : 'Partial / not reported']);
@@ -38,6 +38,7 @@ export function laboratoryXlsx(report: Omit<Pick<LabReport, 'laboratory_name' | 
  for (const row of p.tests) tests.push([row.label, row.morning, row.evening, row.night, labShifts.some(s => row[s] !== null) ? labShifts.reduce((n, s) => n + (row[s] ?? 0), 0) : null, labShifts.every(s => row[s] !== null) ? 'Reported rows complete' : 'Partial']);
  const referrals: Cell[][] = [['Source block', 'Shift', 'Reported patients', 'Reported tests'], ['Outsource', 'No source shift split', p.outsource.patients, p.outsource.tests]];
  for (const s of labShifts) referrals.push(['Urgent / 24-7 Emergency lab referrals', s, p.urgent[s].patients, p.urgent[s].tests]);
+ for (const row of extraReferrals) referrals.push([row.label, 'Recorded referral subset', row.patients, row.tests]);
  referrals.push(['Boundary', 'Lab referrals; not all emergency encounters'], ['Aggregation', 'Kept separate; no unverified combined total']);
  const names = ['Khulasa', 'Test counts', 'Referrals'], tables = [summary, tests, referrals];
  if (comparison) {
