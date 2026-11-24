@@ -13,7 +13,7 @@
     "db:seed": "node --env-file-if-exists=.env.local --import tsx db/seed.ts",
     "test:data": "python3 tests/audit_data.py",
     "db:local": "node scripts/local-start.mjs",
-    "test:unit": "node --import tsx --test tests/contracts.test.ts tests/source-preview.test.ts tests/laboratory.test.ts tests/laboratory-reporting.test.ts tests/laboratory-comparison.test.ts tests/laboratory-visits.test.ts",
+    "test:unit": "node --import tsx --test tests/contracts.test.ts tests/source-preview.test.ts tests/laboratory.test.ts tests/laboratory-reporting.test.ts tests/laboratory-comparison.test.ts tests/laboratory-visits.test.ts tests/laboratory-onboarding.test.ts",
     "test:workflows": "node --env-file=.env.local tests/workflows.mjs",
     "integrations:dry-run": "node --env-file-if-exists=.env.local --import tsx scripts/process-integrations.ts",
     "test:preview": "node tests/preview.mjs",

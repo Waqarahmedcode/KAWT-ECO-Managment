@@ -1,0 +1,14 @@
+{
+  "checks": [
+    "Anonymous/unverified/unrelated accounts denied; duplicate requests serialize; each staff member sees only their own request and cannot approve themselves",
+    "Admin sees pending count, rejects with a reason or atomically approves exact Lab scope; no general staff/admin role is granted",
+    "Viewer downgrade/revocation take effect immediately; stale assignment/approval cannot overwrite newer access; even a changed-role account can be safely disabled",
+    "Changed/unverified identities cannot receive grants; final requests and audit remain immutable; repeated request spam is bounded",
+    "Browser staff signup confirmation path, admin badge/approval, assigned portal, revocation and mobile layouts pass without sending messages or creating Auth accounts"
+  ],
+  "productionRuntime": true,
+  "liveDatabaseChanged": false,
+  "authAccountsCreated": 0,
+  "messagesSent": 0,
+  "source": "Synthetic requests and account metadata in a disposable local database; existing local Auth fixtures only"
+}

@@ -1,0 +1,123 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import { spawn, spawnSync } from 'node:child_process';
+import { setTimeout as delay } from 'node:timers/promises';
+import { parse } from 'dotenv';
+import { Client } from 'pg';
+import { chromium, request } from '@playwright/test';
+
+const bindings = parse(fs.readFileSync('.local/laboratory-test.env')), root = new URL(bindings.DATABASE_URL);
+if (!['127.0.0.1', 'localhost'].includes(root.hostname)) throw Error('Disposable local backend required');
+const accounts = JSON.parse(fs.readFileSync(process.env.KAWT_LAB_EXISTING_ACCOUNTS));
+const owner = accounts.find(a => a.role === 'admin'), staff = accounts.find(a => a.role === 'donor'), second = accounts.find(a => a.role === 'csr_partner'), unverified = accounts.find(a => a.role === 'pharmacist'), clinician = accounts.find(a => a.role === 'doctor');
+assert(owner && staff && second && unverified && clinician, 'Existing local Auth fixtures required');
+const name = 'kawt_init_validation_' + Date.now(), target = new URL(root);target.pathname = '/' + name;
+const admin = new Client({ connectionString: root.toString() });await admin.connect();
+const base = 'http://127.0.0.1:3020', lab = 'Khidmat-e-Alam Diagnostic Centre', otherLab = 'Isolated onboarding partner';
+const env = { ...process.env, ...bindings, DATABASE_URL: target.toString(), KAWT_READINESS_DATABASE_URL: target.toString(), KAWT_INITIALIZE_PROJECT_REF: 'local-test', KAWT_FIRST_ADMIN_EMAIL: owner.email, NEXT_PUBLIC_SITE_URL: base, NEXT_TELEMETRY_DISABLED: '1' };
+const fakeEmail = account => account.role + '@onboarding-test.invalid';
+const contexts = [], checks = [];
+let db, server, browser;
+try {
+ await admin.query('create database "' + name + '"');db = new Client({ connectionString: target.toString() });await db.connect();
+ await db.query("create schema auth;create table auth.users(id uuid primary key,email text,raw_user_meta_data jsonb,email_confirmed_at timestamptz,confirmation_sent_at timestamptz);create table auth.identities(user_id uuid,provider text,identity_data jsonb);create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;create schema storage;create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);create table storage.objects(id uuid primary key,bucket_id text);alter table storage.objects enable row level security;grant usage on schema storage,auth to anon,authenticated;grant select,insert,update,delete on storage.objects,storage.buckets to anon,authenticated");
+ for (const script of ['scripts/initialize-database.mjs', 'scripts/initialize-laboratory.mjs', 'scripts/initialize-laboratory.mjs']) {
+  const result = spawnSync(process.execPath, ['--import', 'tsx', script], { env, encoding: 'utf8', timeout: 60000 });assert.equal(result.status, 0, result.stdout + result.stderr);
+ }
+ for (const account of accounts) {
+  await db.query('insert into auth.users(id,email,email_confirmed_at) values($1,$2,$3)', [account.user_id, fakeEmail(account), account.user_id === unverified.user_id ? null : new Date()]);
+  await db.query('update public.profiles set role=$1 where id=$2', [[staff.user_id, second.user_id, unverified.user_id].includes(account.user_id) ? 'donor' : account.role, account.user_id]);
+ }
+ const as = async (id, operation) => { await db.query('BEGIN');await db.query('SET LOCAL ROLE authenticated');await db.query("select set_config('request.jwt.claim.sub',$1,true)", [id]);try { const value = await operation();await db.query('COMMIT');return value; } catch (error) { await db.query('ROLLBACK');throw error; } };
+ server = spawn(process.execPath, ['node_modules/next/dist/bin/next', process.env.KAWT_ONBOARDING_PRODUCTION === '1' ? 'start' : 'dev', '--hostname', '127.0.0.1', '--port', '3020'], { env, stdio: ['ignore', 'ignore', 'ignore'] });
+ const anon = await request.newContext({ baseURL: base });contexts.push(anon);
+ for (let i = 0; i < 90; i++) { try { if ((await anon.get('/lab/login', { timeout: 2000 })).status() === 200) break; } catch {} if (server.exitCode !== null) throw Error('Test server exited');if (i === 89) throw Error('Test server unavailable');await delay(500); }
+ const login = async account => { const api = await request.newContext({ baseURL: base });contexts.push(api);assert.equal((await api.post('/api/auth/session', { data: { action: 'signin', email: account.email, password: account.password } })).status(), 200);return api; };
+ const ownerApi = await login(owner), userApi = await login(staff), otherApi = await login(second), unverifiedApi = await login(unverified), doctorApi = await login(clinician);
+ const call = async (api, path, value, expected = 200) => { const response = value === undefined ? await api.get(path) : await api.post(path, { data: value });assert.equal(response.status(), expected, await response.text());return response.json(); };
+ const makeRequest = (extra = {}) => ({ action: 'request', laboratory_name: lab, requested_access: 'operator', message: 'Synthetic department request', ...extra });
+ const own = api => call(api, '/api/lab/access-requests');
+ const queue = () => call(ownerApi, '/api/lab/access-requests/admin?status=all');
+ const pendingFor = async account => (await queue()).requests.find(row => row.requester_email === fakeEmail(account) && row.status === 'pending');
+ const decide = (row, status = 'approved', extra = {}) => ({ id: row.id, revision: row.revision, status, decision_note: status === 'rejected' ? 'Contact department supervisor' : '', ...(status === 'approved' ? { laboratory_name: row.laboratory_name, granted_access: row.requested_access, current_grant_revision: row.current_grant_revision ?? null } : {}), ...extra });
+ const grants = () => call(ownerApi, '/api/lab/access');
+ const staffGrant = async () => (await grants()).grants.find(row => row.user_id === staff.user_id);
+ const visitsPath = '/api/lab/visits?start=2026-01-01&end=2026-01-01';
+ assert.equal((await anon.get('/api/lab/access-requests')).status(), 401);assert.equal((await userApi.get('/api/lab/access-requests/admin?summary=1')).status(), 403);assert.equal((await userApi.get('/api/lab/access')).status(), 403);
+ assert.equal((await userApi.post('/api/lab/access-requests', { data: makeRequest(), headers: { Origin: 'https://untrusted.invalid' } })).status(), 403);
+ await call(userApi, '/api/lab/access-requests', { ...makeRequest(), role: 'admin' }, 400);
+ await call(unverifiedApi, '/api/lab/access-requests', makeRequest(), 400);await call(doctorApi, '/api/lab/access-requests', makeRequest(), 403);
+ const repeated = await Promise.all([call(userApi, '/api/lab/access-requests', makeRequest()), call(userApi, '/api/lab/access-requests', makeRequest())]);
+ assert.equal(repeated.filter(row => row.alreadyPending).length, 1);const a = repeated[0].request;
+ const b = (await call(otherApi, '/api/lab/access-requests', makeRequest({ laboratory_name: otherLab, requested_access: 'viewer' }))).request;
+ assert.equal((await own(userApi)).requests.length, 1);assert.equal((await own(userApi)).requests[0].id, a.id);
+ assert.equal(await as(staff.user_id, async () => (await db.query('select id from public.kawt_lab_access_requests where id=$1', [b.id])).rowCount), 0);
+ await assert.rejects(as(staff.user_id, () => db.query("update public.kawt_lab_access_requests set status='approved',granted_access='operator',granted_laboratory_name=$1 where id=$2", [lab, a.id])), error => error.code === '42501');
+ await assert.rejects(as(staff.user_id, () => db.query('select * from public.kawt_lab_access_directory()')), error => error.code === '42501');
+ assert.equal((await db.query('select count(*)::int as count from public.kawt_lab_access')).rows[0].count, 0);
+ checks.push('Anonymous/unverified/unrelated accounts denied; duplicate requests serialize; each staff member sees only their own request and cannot approve themselves');
+ let pending = await call(ownerApi, '/api/lab/access-requests/admin?summary=1');assert.equal(pending.pendingCount, 2);
+ await call(ownerApi, '/api/lab/access-requests/admin', decide(await pendingFor(second), 'rejected', { decision_note: '' }), 400);
+ await call(ownerApi, '/api/lab/access-requests/admin', decide(await pendingFor(second), 'rejected'));
+ assert.equal((await own(otherApi)).requests[0].status, 'rejected');assert.equal((await own(otherApi)).grant, null);
+ await call(otherApi, '/api/lab/access-requests', makeRequest({ laboratory_name: otherLab, requested_access: 'viewer' }));
+ await call(ownerApi, '/api/lab/access-requests/admin', decide(await pendingFor(second)));
+ await call(ownerApi, '/api/lab/access-requests/admin', decide(await pendingFor(staff)));
+ await call(ownerApi, '/api/lab/access-requests/admin', decide({ ...a, current_grant_revision: null }), 409);
+ assert.equal((await userApi.get(visitsPath)).status(), 200);assert.equal((await otherApi.get(visitsPath)).status(), 403);
+ assert.equal((await own(userApi)).grant.access, 'operator');assert.equal((await own(otherApi)).grant.laboratory_name, otherLab);
+ assert.equal((await db.query('select role from public.profiles where id=$1', [staff.user_id])).rows[0].role, 'donor');assert.equal((await userApi.get('/api/clinical/summary')).status(), 403);
+ checks.push('Admin sees pending count, rejects with a reason or atomically approves exact Lab scope; no general staff/admin role is granted');
+ let grant = await staffGrant();
+ await call(ownerApi, '/api/lab/access', { email: fakeEmail(staff), laboratory_name: lab, access: 'viewer', active: true, revision: grant.revision });
+ assert.equal((await userApi.get(visitsPath)).status(), 403);assert.equal((await userApi.get('/api/lab/visits/summary?start=2026-01-01&end=2026-01-01')).status(), 200);
+ await call(ownerApi, '/api/lab/access', { email: fakeEmail(staff), laboratory_name: lab, access: 'operator', active: false, revision: grant.revision }, 409);
+ grant = await staffGrant();await call(ownerApi, '/api/lab/access', { email: fakeEmail(staff), laboratory_name: lab, access: 'viewer', active: false, revision: grant.revision });
+ assert.equal((await userApi.get('/api/lab/visits/summary?start=2026-01-01&end=2026-01-01')).status(), 403);
+ await call(userApi, '/api/lab/access-requests', makeRequest());let changedRequest = await pendingFor(staff);
+ grant = await staffGrant();await call(ownerApi, '/api/lab/access', { email: fakeEmail(staff), laboratory_name: lab, access: 'viewer', active: true, revision: grant.revision });
+ await call(ownerApi, '/api/lab/access-requests/admin', decide(changedRequest), 409);assert.equal((await pendingFor(staff)).status, 'pending');
+ changedRequest = await pendingFor(staff);await call(ownerApi, '/api/lab/access-requests/admin', decide(changedRequest));
+ assert.equal((await userApi.get(visitsPath)).status(), 200);
+ await db.query("update public.profiles set role='doctor' where id=$1", [staff.user_id]);grant = await staffGrant();
+ await call(ownerApi, '/api/lab/access', { email: fakeEmail(staff), laboratory_name: lab, access: 'operator', active: false, revision: grant.revision });
+ assert.equal((await staffGrant()).active, false);await db.query("update public.profiles set role='donor' where id=$1", [staff.user_id]);
+ checks.push('Viewer downgrade/revocation take effect immediately; stale assignment/approval cannot overwrite newer access; even a changed-role account can be safely disabled');
+ await assert.rejects(as(owner.user_id, () => db.query('insert into public.kawt_lab_access(user_id,access,active,granted_by,laboratory_name) values($1,$2,true,$3,$4)', [unverified.user_id, 'operator', owner.user_id, lab])), error => ['P0001', '42501'].includes(error.code));
+ await db.query('update auth.users set email_confirmed_at=now() where id=$1', [unverified.user_id]);
+ await call(unverifiedApi, '/api/lab/access-requests', makeRequest());const identityChange = await pendingFor(unverified);
+ await db.query("update auth.users set email='changed@onboarding-test.invalid' where id=$1", [unverified.user_id]);
+ await call(ownerApi, '/api/lab/access-requests/admin', decide(identityChange), 400);assert.equal((await db.query('select count(*)::int as n from public.kawt_lab_access where user_id=$1', [unverified.user_id])).rows[0].n, 0);
+ await call(ownerApi, '/api/lab/access-requests/admin', decide(identityChange, 'rejected'));
+ for (let i = 0; i < 3; i++) { const item = (await call(otherApi, '/api/lab/access-requests', makeRequest({ laboratory_name: 'Rate limit test department' }))).request;await call(otherApi, '/api/lab/access-requests', { action: 'withdraw', id: item.id, revision: item.revision }); }
+ await call(otherApi, '/api/lab/access-requests', makeRequest({ laboratory_name: 'Rate limit test department' }), 400);
+ assert.equal(await as(staff.user_id, async () => (await db.query('select id from public.kawt_lab_onboarding_audit')).rowCount), 0);
+ await assert.rejects(as(staff.user_id, () => db.query('delete from public.kawt_lab_access_requests where id=$1', [a.id])), error => error.code === '42501');
+ const audit = await db.query('select entity_kind,action,previous,current_value from public.kawt_lab_onboarding_audit');assert(audit.rows.some(row => row.entity_kind === 'request' && row.current_value.status === 'approved'));assert(audit.rows.some(row => row.entity_kind === 'grant' && row.previous?.active && !row.current_value.active));
+ checks.push('Changed/unverified identities cannot receive grants; final requests and audit remain immutable; repeated request spam is bounded');
+ browser = await chromium.launch({ headless: true, executablePath: '/usr/bin/chromium', args: ['--no-sandbox'] });
+ const signupContext = await browser.newContext(), signupPage = await signupContext.newPage();let intercepted = false;
+ await signupPage.route('**/api/auth/session', async route => { const body = route.request().postDataJSON();assert.equal(body.action, 'signup');assert.equal(body.entrypoint, 'lab');intercepted = true;await route.fulfill({ contentType: 'application/json', body: JSON.stringify({ authenticated: false, confirmationRequired: true }) }); });
+ await signupPage.goto(base + '/lab/login');await signupPage.getByRole('button', { name: 'Staff account banayein', exact: true }).click();await signupPage.getByLabel('Staff full name').fill('Synthetic staff signup');await signupPage.getByLabel('Lab work email').fill('signup@onboarding-test.invalid');await signupPage.getByLabel('Lab account password').fill('LocalMockSignupOnly123!');await signupPage.getByRole('button', { name: 'Staff account create karein', exact: true }).click();await signupPage.getByRole('status').filter({ hasText: 'confirmation link' }).waitFor();assert(intercepted);await signupContext.close();
+ const userContext = await browser.newContext({ storageState: await userApi.storageState(), viewport: { width: 1280, height: 900 } }), userPage = await userContext.newPage();
+ const ownerContext = await browser.newContext({ storageState: await ownerApi.storageState(), viewport: { width: 1440, height: 1050 } }), ownerPage = await ownerContext.newPage(), errors = [];
+ userPage.on('pageerror', error => errors.push(error.message));ownerPage.on('pageerror', error => errors.push(error.message));
+ await userPage.goto(base + '/lab/visits');await userPage.getByRole('heading', { name: 'Lab access request', exact: true }).waitFor();assert(userPage.url().endsWith('/lab/access'));
+ await userPage.getByLabel('Access request note').fill('Synthetic browser department request');await userPage.getByRole('button', { name: 'Access request bhejein', exact: true }).click();await userPage.getByRole('heading', { name: 'Admin review ka intezar', exact: true }).waitFor();
+ await ownerPage.goto(base + '/dashboard');const bell = ownerPage.getByRole('link', { name: 'Staff access requests: 1 pending', exact: true });await bell.waitFor();await bell.click();await ownerPage.getByRole('heading', { name: 'Staff access aur requests', exact: true }).waitFor();
+ const card = ownerPage.locator('article').filter({ hasText: fakeEmail(staff) });await card.getByLabel('Assigned laboratory for ' + fakeEmail(staff)).fill(otherLab);await card.getByRole('button', { name: 'Approve', exact: true }).click();await ownerPage.getByRole('status').filter({ hasText: 'Request approve ho gayi' }).waitFor();
+ await userPage.evaluate(() => window.dispatchEvent(new Event('focus')));await userPage.getByRole('link', { name: 'Apna Lab portal kholein', exact: true }).waitFor();await userPage.getByRole('link', { name: 'Apna Lab portal kholein', exact: true }).click();await userPage.getByRole('heading', { name: 'Patient aur test entry', exact: true }).waitFor();assert((await userPage.locator('header').innerText()).includes(otherLab));assert.equal(await userPage.getByRole('link', { name: 'Overall dashboard', exact: true }).count(), 0);
+ const assignedRow = ownerPage.getByRole('table', { name: 'Department access assignments' }).getByRole('row').filter({ hasText: fakeEmail(staff) });await assignedRow.getByRole('button', { name: 'Disable access', exact: true }).click();await ownerPage.getByRole('status').filter({ hasText: 'Department access disable ho gaya' }).waitFor();
+ assert.equal((await userApi.get(visitsPath)).status(), 403);await userPage.goto(base + '/lab/visits');await userPage.getByRole('heading', { name: 'Lab access request', exact: true }).waitFor();
+ fs.mkdirSync('/workspace/KAWT-current-preview', { recursive: true });await ownerPage.screenshot({ path: '/workspace/KAWT-current-preview/staff-access-admin-local-2026-11-24.png', fullPage: false });
+ await ownerPage.setViewportSize({ width: 390, height: 844 });assert(await ownerPage.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1));
+ await ownerPage.goto(base + '/dashboard');await ownerPage.getByRole('link', { name: /Staff access requests:/ }).waitFor();assert(await ownerPage.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1));
+ assert.deepEqual(errors, []);await ownerContext.close();await userContext.close();
+ checks.push('Browser staff signup confirmation path, admin badge/approval, assigned portal, revocation and mobile layouts pass without sending messages or creating Auth accounts');
+ fs.writeFileSync('docs/LAB-ONBOARDING-VALIDATION-2026-11-24.json', JSON.stringify({ checks, productionRuntime: process.env.KAWT_ONBOARDING_PRODUCTION === '1', liveDatabaseChanged: false, authAccountsCreated: 0, messagesSent: 0, source: 'Synthetic requests and account metadata in a disposable local database; existing local Auth fixtures only' }, null, 2) + '\n');
+ checks.forEach(check => console.log('PASS: ' + check));
+} finally {
+ for (const context of contexts) await context.dispose();await browser?.close();
+ if (server && server.exitCode === null) { server.kill('SIGTERM');await Promise.race([new Promise(resolve => server.once('exit', resolve)), delay(5000)]); }
+ await db?.end().catch(() => {});await admin.query('drop database if exists "' + name + '" with (force)');await admin.end();
+}

@@ -7,6 +7,7 @@ export default async function LabReportsPage({ searchParams }: { searchParams: P
  try { actor = await requireLabAccess(); }
  catch (error) {
   if (error instanceof Error && error.message === 'UNAUTHENTICATED') redirect('/lab/login');
+  if (error instanceof Error && error.message === 'FORBIDDEN') redirect('/lab/access');
   return <main className="mx-auto max-w-xl p-8"><h1 className="font-serif text-3xl">Lab access darkar hai</h1><p className="mt-4">Is account ko laboratory reporting ki permission nahin mili.</p></main>;
  }
  const params = await searchParams, single = (key: string) => typeof params[key] === 'string' ? params[key] as string : '';

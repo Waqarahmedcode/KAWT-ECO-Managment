@@ -2,14 +2,16 @@ import { z } from 'zod';
 import { getSupabase } from '@/lib/supabase';
 import { bootstrapFirstAdministrator } from '@/lib/first-administrator';
 import { sameOrigin,workspaceError } from '@/lib/actor-db';
+import { departmentSignupRedirect } from '@/lib/laboratory-onboarding';
 
 export async function POST(request:Request){try{
  sameOrigin(request);
- const input=z.object({action:z.enum(['signin','signup','signout']),email:z.string().email().optional(),password:z.string().min(12).max(200).optional(),full_name:z.string().trim().min(2).max(140).optional()}).parse(await request.json());
+ const input=z.object({action:z.enum(['signin','signup','signout']),email:z.string().email().optional(),password:z.string().min(12).max(200).optional(),full_name:z.string().trim().min(2).max(140).optional(),entrypoint:z.enum(['main','lab']).optional()}).parse(await request.json());
  const supabase=await getSupabase();
  if(input.action==='signout'){await supabase.auth.signOut();return Response.json({signedOut:true})}
  if(!input.email||!input.password)return Response.json({error:'Email and password are required; passwords must contain at least 12 characters'},{status:400});
- const result=input.action==='signup'?await supabase.auth.signUp({email:input.email,password:input.password,options:{data:{full_name:input.full_name},emailRedirectTo:new URL('/auth/callback',process.env.NEXT_PUBLIC_SITE_URL??request.url).toString()}}):await supabase.auth.signInWithPassword({email:input.email,password:input.password});
+ const site=process.env.NEXT_PUBLIC_SITE_URL??request.url;
+ const result=input.action==='signup'?await supabase.auth.signUp({email:input.email,password:input.password,options:{data:{full_name:input.full_name},emailRedirectTo:input.entrypoint==='lab'?departmentSignupRedirect(site):new URL('/auth/callback',site).toString()}}):await supabase.auth.signInWithPassword({email:input.email,password:input.password});
  if(result.error)return Response.json({error:input.action==='signin'?'Unable to sign in. Check your credentials and email confirmation.':result.error.message},{status:400});
  if(result.data.session&&result.data.user)await bootstrapFirstAdministrator(result.data.user);
  return Response.json({authenticated:Boolean(result.data.session),confirmationRequired:!result.data.session});
