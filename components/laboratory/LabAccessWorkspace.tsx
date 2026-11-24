@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { mainLaboratoryName } from '@/lib/laboratory';
@@ -18,7 +19,7 @@ function historyLabel(row: AccessChange) {
 }
 function AccessHeader({ admin }: { admin: boolean }) {
  const router = useRouter();const [message, setMessage] = useState('');
- return <><header className="mb-6 flex flex-wrap items-start justify-between gap-4"><div><p className="text-xs font-bold uppercase tracking-widest">KAWT · Private department access</p><h1 className="mt-2 font-serif text-3xl">{admin ? 'Staff access aur requests' : 'Lab access request'}</h1></div><nav className="flex flex-wrap gap-2">{admin && <a className={button} href="/dashboard">Overall dashboard</a>}<a className={button} href="/lab/visits">Lab entry</a><button className={button} onClick={async () => { try { await requestJson('/api/auth/session', { action: 'signout' });router.replace('/lab/login');router.refresh(); } catch (error) { setMessage(error instanceof Error ? error.message : 'Sign out nahin hua'); } }}>Sign out</button></nav></header>{message && <p role="alert" className={panel}>{message}</p>}</>;
+ return <><header className="mb-6 flex flex-wrap items-start justify-between gap-4"><div><p className="text-xs font-bold uppercase tracking-widest">KAWT · Private department access</p><h1 className="mt-2 font-serif text-3xl">{admin ? 'Staff access aur requests' : 'Lab access request'}</h1></div><nav className="flex flex-wrap gap-2">{admin && <a className={button} href="/dashboard">Overall dashboard</a>}<Link className={button} href="/departments">Department workspaces</Link><a className={button} href="/lab/visits">Lab entry</a><button className={button} onClick={async () => { try { await requestJson('/api/auth/session', { action: 'signout' });router.replace('/lab/login');router.refresh(); } catch (error) { setMessage(error instanceof Error ? error.message : 'Sign out nahin hua'); } }}>Sign out</button></nav></header>{message && <p role="alert" className={panel}>{message}</p>}</>;
 }
 type OwnData = { requests: StaffRequest[]; grant: Pick<LabGrant, 'access' | 'active' | 'laboratory_name' | 'revision'> | null; canRequest: boolean };
 export function StaffLabRequest() {

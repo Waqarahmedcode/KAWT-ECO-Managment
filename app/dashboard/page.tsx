@@ -4,7 +4,7 @@ import { isConfigured } from '@/lib/db';
 import { requireRole } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import Workspace from '@/components/workspace/Workspace';
-import { allRoles } from '@/lib/actor-db';
+import { actorTransaction, allRoles } from '@/lib/actor-db';
 import { requireLabAccess } from '@/lib/laboratory-server';
 export const dynamic = 'force-dynamic';
 
@@ -18,6 +18,8 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
  const access = await requireRole(allRoles).catch(() => null);
  if (!access) redirect('/login');
  if (access.role === 'donor') {
+  const departments = await actorTransaction(allRoles, async db => (await db.query('select 1 from public.kawt_department_access where user_id=(select auth.uid()) and active limit 1')).rowCount);
+  if (departments) redirect('/departments');
   const department = await requireLabAccess().catch(() => null);
   if (department) redirect('/lab');
  }

@@ -1,0 +1,12 @@
+{
+  "checks": [
+    "Separate OPD/Urgent scopes, aggregate-only viewers, Pakistan date, doctor validation, duplicate retry, audited correction/cancellation and immediate revocation pass",
+    "Lead consent, search/stage/overdue filters, assignment, idempotent save, stale revisions, confirmed conversion, audit isolation and separate central metrics pass; existing camp/Lab data remain intact",
+    "Production browser navigation, OPD entry/correction, privacy-safe CSV, lead entry/progression, scoped staff landing, viewer privacy and five mobile screens pass"
+  ],
+  "productionRuntime": true,
+  "liveDatabaseChanged": false,
+  "authAccountsCreated": 0,
+  "messagesSent": 0,
+  "source": "Synthetic records in a disposable local database using existing local Auth fixtures only"
+}

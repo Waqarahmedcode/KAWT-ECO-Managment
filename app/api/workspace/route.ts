@@ -171,7 +171,7 @@ async function execute(db:PoolClient,actor:Actor,action:Action,data:Record<strin
    const result=await db.query('select public.confirm_bank_donation($1,$2) as id',[data.id,data.proof_reference]);return result.rows[0];
   }
   case 'tax_certificate':return (await db.query('select public.issue_donation_certificate($1,$2,$3,$4) as id',[data.donation_id,data.authorized_name,data.authorized_title,data.statement])).rows[0];
-  case 'lead':return save(db,'donor_leads',{...data,...(!data.id?{provider:'manual',external_lead_id:crypto.randomUUID()}:{}),contact_status:data.marketing_consent?data.contact_status:'do_not_contact'});
+  case 'lead':throw Object.assign(new Error('Use Lead Management to preserve consent, revisions and conversion evidence'),{code:'P0001'});
   case 'staff_role':await db.query('select public.set_staff_role($1,$2)',[data.user_id,data.role]);return {id:data.user_id,role:data.role};
   case 'published_report':return save(db,'published_reports',{...data,approved_by:actor.id});
   case 'document':return save(db,'institutional_documents',{...data,...(data.status==='verified'?{verified_by:actor.id,verified_at:new Date().toISOString()}:{verified_by:null,verified_at:null})});
