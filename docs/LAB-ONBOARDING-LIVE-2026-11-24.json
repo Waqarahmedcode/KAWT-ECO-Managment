@@ -1,0 +1,143 @@
+{
+  "date": "2026-11-24",
+  "site": "https://kawt-eco-managment-preview.netlify.app",
+  "sourceCommit": "e97592102be02ac3d81f31d8edd3acedeb18b02a",
+  "deployId": "6b05506ef092732de7c1ef44",
+  "publishedAt": "2026-11-24T08:54:10.000Z",
+  "canonicalDeployVerified": true,
+  "productionBuildPassed": true,
+  "routes": [
+    {
+      "route": "/dashboard",
+      "status": 307,
+      "passed": true
+    },
+    {
+      "route": "/lab/access",
+      "status": 307,
+      "passed": true
+    },
+    {
+      "route": "/api/lab/access-requests",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "route": "/api/lab/access-requests/admin?summary=1",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "route": "/api/lab/access",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "route": "/preview",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "route": "/login",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "route": "/lab/login",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "route": "/lab/reports",
+      "status": 307,
+      "passed": true
+    },
+    {
+      "route": "/medical-centre",
+      "status": 307,
+      "passed": true
+    },
+    {
+      "route": "/lab/visits",
+      "status": 307,
+      "passed": true
+    },
+    {
+      "route": "/api/lab/entry-settings",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "route": "/api/lab/visits?start=2026-02-01&end=2026-02-01",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "route": "/api/lab/visits/summary?start=2026-02-01&end=2026-02-01",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "route": "/api/medical-centre",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "route": "/api/lab/comparison?kind=month&start=2026-07-01&end=2026-07-31",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "route": "/api/lab/reports",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "route": "/api/giving",
+      "status": 200,
+      "passed": true
+    }
+  ],
+  "cloudMarkers": {
+    "available": true,
+    "markers": [
+      "KAWT_DATABASE_INITIALIZATION {\"status\":\"already_initialized\",\"databaseChanged\":false}",
+      "KAWT_LAB_INITIALIZATION {\"status\":\"initialized\",\"migrations\":1,\"tables\":2,\"accountsCreated\":0,\"businessRecordsCreated\":0,\"databaseChanged\":true}",
+      "KAWT_FIRST_ADMIN {\"status\":\"already_bootstrapped\"}",
+      "KAWT_DOCTOR_SCHEDULE {\"status\":\"already_imported\",\"created\":0,\"liveRatesCreated\":0,\"sourceGroups\":[{\"service_group\":\"OPD\",\"count\":11},{\"service_group\":\"URGENT_CARE\",\"count\":4}],\"verifiedOwner\":true,\"databaseChanged\":false,\"ratesApplied\":false,\"billingEnabled\":false}",
+      "KAWT_BACKEND_READINESS {\"status\":\"schema_ready\",\"connected\":true,\"readOnly\":true,\"missingTables\":[],\"tablesWithoutRls\":[],\"missingMigrations\":[],\"privateReceiptBucket\":true,\"databaseChanged\":false}"
+    ]
+  },
+  "unitTestsPassed": 54,
+  "isolatedProductionBrowserApiChecks": "passed",
+  "ownerVerified": true,
+  "doctorScheduleImport": {
+    "status": "already_imported",
+    "created": 0,
+    "liveRatesCreated": 0,
+    "sourceGroups": [
+      {
+        "service_group": "OPD",
+        "count": 11
+      },
+      {
+        "service_group": "URGENT_CARE",
+        "count": 4
+      }
+    ],
+    "verifiedOwner": true,
+    "databaseChanged": false,
+    "ratesApplied": false,
+    "billingEnabled": false
+  },
+  "newMigrationsRequired": 1,
+  "newPrivateTables": 2,
+  "liveTestPatientsCreated": 0,
+  "automaticBilling": false,
+  "staffOnboarding": "published; staff request, admin badge and approval, scoped assignment and revocation with audit",
+  "liveTestStaffCreated": 0,
+  "outboundMessagesSent": 0,
+  "requiredRlsTables": 52,
+  "shiftHoursAndRates": "actual values not seeded; configure valid-from date or choose shift manually; missing price remains unknown",
+  "credentialsIncluded": false
+}

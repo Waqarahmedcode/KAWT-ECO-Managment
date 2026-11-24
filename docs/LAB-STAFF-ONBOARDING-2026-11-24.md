@@ -16,7 +16,7 @@ The same screen lists existing assignments. Administrators can change the assign
 
 54 unit tests, lint, TypeScript and optimized production build passed. Disposable local SQL/API/browser tests covered concurrent requests, self-approval denial, isolation, approval/rejection, changed identity, stale revisions, immediate revocation, immutable audit, staff signup UI, dashboard notification and mobile layout. Existing local Auth fixtures were reused; synthetic signup responses were mocked, so no real staff account or message was created. Live email delivery and a real department's first signup still require operational acceptance.
 
-Evidence: `LAB-ONBOARDING-VALIDATION-2026-11-24.json`. Publication and cloud migration evidence is recorded separately after deployment.
+Evidence: `LAB-ONBOARDING-VALIDATION-2026-11-24.json`. Hosted deployment `6b05506ef092732de7c1ef44` published source `e97592102be02ac3d81f31d8edd3acedeb18b02a` successfully. `LAB-ONBOARDING-LIVE-2026-11-24.json` verifies the canonical deployment, one guarded migration/two new private tables, schema/RLS readiness, preserved 15 doctor drafts and authenticated-route protection. No live test accounts or business records were created.
 
 ## Still pending
 
